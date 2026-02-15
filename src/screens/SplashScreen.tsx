@@ -10,10 +10,15 @@ import {
 } from 'react-native';
 import {Typography} from '../theme/typography';
 import { useTheme } from '../hooks/useTheme';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../navigation/RootNavigator';
+
 
 export default function SplashScreen() {
   const theme = useTheme();
-
+  const navigation = useNavigation<NavigationProp>();
+  type NavigationProp = NativeStackNavigationProp<RootStackParamList,'Splash'>
   return (
     <View style={{ flex: 1 }}>
       {/* Ảnh nền */}
@@ -47,6 +52,7 @@ export default function SplashScreen() {
             styles.button,
             { backgroundColor: theme.colors.primary },
           ]}
+          onPress={() => navigation.navigate('AuthIntro')}
         >
           <Text style={styles.buttonText}>
             Bắt đầu khám phá
@@ -71,6 +77,7 @@ const styles = StyleSheet.create({
     width: 70,
     height: 70,
     marginBottom: 24,
+    borderRadius:12
   },
   title: {
     ...Typography.H1,
