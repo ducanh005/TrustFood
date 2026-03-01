@@ -40,7 +40,10 @@ export default function AuthIntroScreen() {
         <AppText variant="P1_Medium">Đăng nhập</AppText>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.outlineBtn}>
+      <TouchableOpacity 
+        style={styles.outlineBtn}
+        onPress={() => navigation.navigate('Register')}
+        >
         <AppText variant="P1_Medium" style={{ color: theme.colors.background }}>
           Đăng ký
         </AppText>

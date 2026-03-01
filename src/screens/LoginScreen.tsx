@@ -11,6 +11,7 @@ import { useTheme } from '../hooks/useTheme';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/RootNavigator';
+import { Toggle } from '../components/Toggle';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 
@@ -71,13 +72,13 @@ export default function LoginScreen() {
             onPress={() => setRemember(!remember)}
             activeOpacity={0.7}
           >
-            <View style={[styles.checkbox, remember && styles.checkboxActive]} />
+            <Toggle type='checkbox' checked={remember} />
             <AppText variant="P4_Regular" style={{ color: theme.colors.background, marginLeft: 6 }}>
               Lưu mật khẩu
             </AppText>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+          <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
             <AppText variant="P4_Regular" style={{ color: theme.colors.primary }}>
               Quên mật khẩu?
             </AppText>
@@ -225,15 +226,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  checkbox: {
-    width: 16,
-    height: 16,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: '#666',
-  },
-  checkboxActive: {
-    backgroundColor: '#3B82F6',
-    borderColor: '#3B82F6',
-  },
+ 
+  
 });
