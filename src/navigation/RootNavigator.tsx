@@ -7,6 +7,8 @@ import RegisterScreen from '../screens/RegisterScreen';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
 import VerifyOTPScreen from '../screens/VerifyOTPScreen';
 import ResetPasswordScreen from '../screens/ResetPasswordScreen';
+import CreatePasswordScreen from '../screens/CreatePasswordScreen';
+import SetNameScreen from '../screens/SetNameScreen';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export type RootStackParamList = {
@@ -21,6 +23,8 @@ export type RootStackParamList = {
     email: string;
     otp: string;
   };
+  CreatePassword: { email: string };
+  SetName: { email: string; password: string };
 };
 
 export default function RootNavigator() {
@@ -33,6 +37,8 @@ export default function RootNavigator() {
       <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
       <Stack.Screen name="VerifyOTP" component={VerifyOTPScreen} />
       <Stack.Screen name="Register" component={RegisterScreen} />
+      <Stack.Screen name="CreatePassword" component={CreatePasswordScreen} />
+      <Stack.Screen name="SetName" component={SetNameScreen} />
 
     </Stack.Navigator>
   );
