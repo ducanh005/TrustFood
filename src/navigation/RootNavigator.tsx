@@ -9,6 +9,8 @@ import VerifyOTPScreen from '../screens/VerifyOTPScreen';
 import ResetPasswordScreen from '../screens/ResetPasswordScreen';
 import CreatePasswordScreen from '../screens/CreatePasswordScreen';
 import SetNameScreen from '../screens/SetNameScreen';
+import SendScreen from '../screens/SendScreen';
+import CameraScreen from '../screens/CameraScreen';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export type RootStackParamList = {
@@ -25,6 +27,9 @@ export type RootStackParamList = {
   };
   CreatePassword: { email: string };
   SetName: { email: string; password: string };
+  Camera: undefined;
+  Preview: { imageUri: string };
+  Send: { imageUri: string };
 };
 
 export default function RootNavigator() {
@@ -39,7 +44,8 @@ export default function RootNavigator() {
       <Stack.Screen name="Register" component={RegisterScreen} />
       <Stack.Screen name="CreatePassword" component={CreatePasswordScreen} />
       <Stack.Screen name="SetName" component={SetNameScreen} />
-
+      <Stack.Screen name="Camera" component={CameraScreen} />
+      <Stack.Screen name="Send" component={SendScreen} />
     </Stack.Navigator>
   );
 }

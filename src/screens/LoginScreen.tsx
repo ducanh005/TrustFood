@@ -22,6 +22,16 @@ export default function LoginScreen() {
   const [remember, setRemember] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+  const handleLogin = async () => {
+  const isSuccess = true; // 🔥 FAKE LOGIN
+
+  if (isSuccess) {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Camera' }],
+    });
+  }
+};
   return (
     <View style={[styles.container, { backgroundColor: '#000' }]}>
       <View style={styles.content}>
@@ -89,7 +99,7 @@ export default function LoginScreen() {
       <View style={styles.content2}>
         <TouchableOpacity
           style={[styles.primaryBtn, { backgroundColor: theme.colors.primary }]}
-          onPress={() => navigation.navigate('Login')}
+          onPress={handleLogin}
         >
           <AppText variant="P1_Medium">Đăng nhập</AppText>
         </TouchableOpacity>
