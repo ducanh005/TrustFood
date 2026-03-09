@@ -11,6 +11,7 @@ import CreatePasswordScreen from '../screens/CreatePasswordScreen';
 import SetNameScreen from '../screens/SetNameScreen';
 import SendScreen from '../screens/SendScreen';
 import CameraScreen from '../screens/CameraScreen';
+import FoodReviewScreen from '../screens/FoodReviewScreen';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export type RootStackParamList = {
@@ -30,6 +31,7 @@ export type RootStackParamList = {
   Camera: undefined;
   Preview: { imageUri: string };
   Send: { imageUri: string };
+  FoodReview: undefined;
 };
 
 export default function RootNavigator() {
@@ -46,6 +48,7 @@ export default function RootNavigator() {
       <Stack.Screen name="SetName" component={SetNameScreen} />
       <Stack.Screen name="Camera" component={CameraScreen} />
       <Stack.Screen name="Send" component={SendScreen} />
+      <Stack.Screen name="FoodReview" component={FoodReviewScreen} />
     </Stack.Navigator>
   );
 }

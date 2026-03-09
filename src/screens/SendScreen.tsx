@@ -38,6 +38,12 @@ export default function SendScreen() {
     }
   };
 
+  const handleGoToReview = () => {
+    navigation.navigate("FoodReview", {
+      imageUri,
+    });
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.topBar}>
@@ -73,29 +79,36 @@ export default function SendScreen() {
         )}
       </View>
 
-      <View style={styles.frameContainer}>
-        <View style={styles.frame}>
-          <Image
-            source={{ uri: imageUri }}
-            style={styles.previewImage}
-            resizeMode="cover"
-          />
-          <View style={styles.flashBadge}>
-            <Text style={{ color: "#fff" }}>⚡</Text>
+      {/* PREVIEW CONTAINER */}
+      <View style={styles.previewContainer}>
+        <View style={styles.frameContainer}>
+          <View style={styles.frame}>
+            <Image
+              source={{ uri: imageUri }}
+              style={styles.previewImage}
+              resizeMode="cover"
+            />
+            <View style={styles.flashBadge}>
+              <Text style={{ color: "#fff" }}>⚡</Text>
+            </View>
+            <View style={styles.zoomBadge}>
+              <Text style={{ color: "#fff" }}>1x</Text>
+            </View>
           </View>
-          <View style={styles.zoomBadge}>
-            <Text style={{ color: "#fff" }}>1x</Text>
+
+          <View style={styles.modeDots}>
+            <TouchableOpacity style={styles.dotActive} />
+            <TouchableOpacity style={styles.dot} 
+              onPress={handleGoToReview}
+             />
           </View>
-        </View>
 
-        <View style={styles.modeDots}>
-          <View style={styles.dotActive} />
-          <View style={styles.dot} />
-        </View>
+          <Text style={styles.modeText}>Gửi ảnh</Text>
 
-        <Text style={styles.modeText}>Gửi ảnh</Text>
+        </View>
       </View>
 
+      {/* BOTTOM ACTION BUTTONS */}
       <View style={styles.bottomBar}>
         <TouchableOpacity style={styles.smallBtn}>
           <Ionicons name="images" size={24} color="#fff" />
@@ -140,6 +153,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 20,
+    zIndex: 20,
   },
 
   avatar: {
@@ -167,7 +181,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     overflow: "hidden",
     minWidth: 150,
-    zIndex: 10,
+    zIndex: 30,
   },
 
   dropdownItem: {
@@ -180,6 +194,10 @@ const styles = StyleSheet.create({
   dropdownItemText: {
     color: "#fff",
     fontSize: 14,
+  },
+
+  previewContainer: {
+    flex: 1,
   },
 
   frameContainer: {
@@ -218,6 +236,7 @@ const styles = StyleSheet.create({
   modeDots: {
     flexDirection: "row",
     marginTop: 12,
+    justifyContent: "center",
   },
 
   dotActive: {
@@ -239,6 +258,30 @@ const styles = StyleSheet.create({
   modeText: {
     color: "#fff",
     marginTop: 6,
+    textAlign: "center",
+  },
+
+  dotsContainer: {
+    marginTop: 20,
+    flexDirection: "row",
+    gap: 12,
+    justifyContent: "center",
+  },
+
+  dot2: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    backgroundColor: "#333",
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 2,
+    borderColor: "transparent",
+  },
+
+  dot2Active: {
+    backgroundColor: "#FFD400",
+    borderColor: "#FFD400",
   },
 
   bottomBar: {
