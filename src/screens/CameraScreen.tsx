@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { Camera, useCameraDevice } from "react-native-vision-camera";
 import { useNavigation } from "@react-navigation/native";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import Ionicons from "@react-native-vector-icons/ionicons";
 import { openPhoneGallery } from "../utils/galleryHelper";
 
 export default function CameraScreen() {
@@ -89,12 +89,12 @@ export default function CameraScreen() {
           </View>
         </View>
 
-        <View style={styles.modeDots}>
+        {/* <View style={styles.modeDots}>
           <View style={styles.dotActive} />
           <View style={styles.dot} />
-        </View>
+        </View> */}
 
-        <Text style={styles.modeText}>Chụp ảnh</Text>
+        {/* <Text style={styles.modeText}>Chụp ảnh</Text> */}
       </View>
 
       <View style={styles.bottomBar}>
