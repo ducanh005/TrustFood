@@ -1,35 +1,38 @@
-// CustomTabBar.tsx (ý tưởng)
 import React from 'react';
-import { View, Pressable, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import Ionicons from "@react-native-vector-icons/ionicons";
 
-export const CustomTabBar = ({ state, navigation }: any) => {
-  return (
-    <View style={styles.bar}>
-      {state.routes.map((route: any, index: number) => {
-        const focused = state.index === index;
-        return (
-          <Pressable
-            key={route.key}
-            onPress={() => navigation.navigate(route.name)}
-            style={styles.item}
-          >
-            <Text style={{ color: focused ? '#FFC727' : '#999' }}>
-              {route.name}
-            </Text>
-          </Pressable>
-        );
-      })}
+
+export const Navbar = () => (
+  <View style={styles.container}>
+    <View style={styles.left}>
+      <View style={styles.avatarPlaceholder} />
     </View>
-  );
-};
+    <Text style={styles.title}>Bản tin</Text>
+    <TouchableOpacity style={styles.right}>
+      <Ionicons name="chatbubble-ellipses-outline" size={24} color="#fff" />
+    </TouchableOpacity>
+  </View>
+);
 
 const styles = StyleSheet.create({
-  bar: {
+  container: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    padding: 12,
-    borderTopWidth: 1,
-    borderColor: '#EEE',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingTop: 36,
+    paddingBottom: 10,
+    backgroundColor: '#181818',
+    borderBottomWidth: 1,
+    borderBottomColor: '#222',
   },
-  item: { alignItems: 'center' },
+  left: { width: 40, height: 40, justifyContent: 'center', alignItems: 'center' },
+  avatarPlaceholder: {
+    width: 32, height: 32, borderRadius: 16, backgroundColor: '#888',
+  },
+  title: {
+    color: '#fff', fontSize: 20, fontWeight: 'bold',
+  },
+  right: { width: 40, height: 40, justifyContent: 'center', alignItems: 'center' },
 });

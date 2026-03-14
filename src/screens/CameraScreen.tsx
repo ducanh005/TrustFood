@@ -116,9 +116,11 @@ export default function CameraScreen() {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.explore}>
-        <Text style={styles.exploreText}>Khám phá</Text>
-      </View>
+        <View style={styles.explore}>
+          <TouchableOpacity onPress={() => navigation.navigate('Discover')}>
+            <Text style={styles.exploreText}>Khám phá</Text>
+          </TouchableOpacity>
+        </View>
     </View>
   );
 }
