@@ -1,19 +1,30 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Ionicons from "@react-native-vector-icons/ionicons";
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../navigation/RootNavigator';
 
 
-export const Navbar = () => (
-  <View style={styles.container}>
-    <View style={styles.left}>
-      <View style={styles.avatarPlaceholder} />
+export const Navbar = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const handleAvatarPress = () => {
+    navigation.navigate('Profile');
+  };
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity onPress={handleAvatarPress}>
+        <View style={styles.left}>
+          <View style={styles.avatarPlaceholder} />
+        </View>
+      </TouchableOpacity>
+      <Text style={styles.title}>Bản tin</Text>
+      <TouchableOpacity style={styles.right}>
+        <Ionicons name="chatbubble-ellipses-outline" size={24} color="#fff" />
+      </TouchableOpacity>
     </View>
-    <Text style={styles.title}>Bản tin</Text>
-    <TouchableOpacity style={styles.right}>
-      <Ionicons name="chatbubble-ellipses-outline" size={24} color="#fff" />
-    </TouchableOpacity>
-  </View>
-);
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

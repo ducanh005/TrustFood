@@ -12,6 +12,12 @@ import SetNameScreen from '../screens/SetNameScreen';
 import CameraScreen from '../screens/CameraScreen';
 import CameraPostScreen from '../screens/CameraPostScreen';
 import DiscoverScreen from '../screens/DiscoverScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import PersonalInfoScreen from '../screens/PersonalInfoScreen';
+import TermsOfUseScreen from '../screens/TermsOfUseScreen';
+import HelpCenterScreen from '../screens/HelpCenterScreen';
+import ShareAppScreen from '../screens/ShareAppScreen';
+import ChangePasswordScreen from '../screens/ChangePasswordScreen';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export type RootStackParamList = {
@@ -33,6 +39,12 @@ export type RootStackParamList = {
   Preview: { imageUri: string };
   Send: { imageUri: string };
   FoodReview: undefined;
+  Profile: undefined;
+  PersonalInfo: undefined;
+  TermsOfUse: undefined;
+  HelpCenter: undefined;
+  ShareApp: undefined;
+  ChangePassword: undefined;
 };
 
 export default function RootNavigator() {
@@ -50,6 +62,20 @@ export default function RootNavigator() {
       <Stack.Screen name="Camera" component={CameraScreen} />
       <Stack.Screen name="Discover" component={DiscoverScreen} />
       <Stack.Screen name="Send" component={CameraPostScreen} />
+      <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          animation: 'fade',
+          animationDuration: 260,
+          gestureEnabled: true,
+        }}
+      />
+      <Stack.Screen name="PersonalInfo" component={PersonalInfoScreen} />
+      <Stack.Screen name="TermsOfUse" component={TermsOfUseScreen} />
+      <Stack.Screen name="HelpCenter" component={HelpCenterScreen} />
+      <Stack.Screen name="ShareApp" component={ShareAppScreen} />
+      <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
     </Stack.Navigator>
   );
 }

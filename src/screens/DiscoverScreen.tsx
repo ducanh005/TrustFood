@@ -3,6 +3,9 @@ import { View, StyleSheet, FlatList, ActivityIndicator, RefreshControl } from 'r
 import {Navbar} from '../components/Navbar';
 import BottomBar from '../components/BottomBar';
 import PostItem, { Post } from '../components/PostItem';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../navigation/RootNavigator';
 
 
 // NOTE: This screen uses fake data for local development/demo.
@@ -58,6 +61,7 @@ function generateFakePosts(page = 1, perPage = 5): Post[] {
 }
 
 export default function DiscoverScreen() {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [posts, setPosts] = useState<Post[]>(() => generateFakePosts(1, 6));
   const [page, setPage] = useState(1);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -101,6 +105,10 @@ export default function DiscoverScreen() {
     console.log('Comment on', id);
   }, []);
 
+  const handleOpenProfile = useCallback(() => {
+    navigation.navigate('Profile');
+  }, [navigation]);
+
   return (
     <View style={styles.container}>
       <Navbar />
@@ -108,7 +116,12 @@ export default function DiscoverScreen() {
         data={posts}
         keyExtractor={(i) => i.id}
         renderItem={({ item }) => (
-          <PostItem post={item} onLike={handleLike} onComment={handleComment} />
+          <PostItem
+            post={item}
+            onLike={handleLike}
+            onComment={handleComment}
+            onPressAuthor={handleOpenProfile}
+          />
         )}
         onEndReachedThreshold={0.6}
         onEndReached={loadMore}
