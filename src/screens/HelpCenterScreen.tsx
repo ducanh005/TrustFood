@@ -58,13 +58,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#0f0b09',
-    paddingHorizontal: 18,
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingTop: 46,
-    marginBottom: 16,
+   flexDirection: 'row',
+		alignItems: 'center',
+		paddingTop: 36,
+		paddingBottom: 12,
+		paddingHorizontal: 16,
+		backgroundColor: 'transparent',
   },
   backBtn: {
     width: 36,
@@ -72,11 +73,11 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 8,
+    marginRight: 10,
   },
   title: {
     color: '#fff',
-    fontSize: 31,
+    fontSize: 24,
     fontWeight: '700',
   },
   heroCard: {

@@ -1,8 +1,8 @@
 
-import React, { useCallback, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image, Animated, Easing } from 'react-native';
+import React, { useCallback } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/RootNavigator';
 
@@ -66,8 +66,6 @@ const settingItems: MenuItem[] = [
 
 export default function ProfileScreen() {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-	const translateY = useRef(new Animated.Value(-120)).current;
-	const opacity = useRef(new Animated.Value(0)).current;
 
 	const handleBack = useCallback(() => {
 		if (navigation.canGoBack()) {
@@ -77,29 +75,12 @@ export default function ProfileScreen() {
 		navigation.navigate('Discover');
 	}, [navigation]);
 
-	useFocusEffect(
-		useCallback(() => {
-			translateY.setValue(-120);
-			opacity.setValue(0);
-			Animated.parallel([
-				Animated.spring(translateY, {
-					toValue: 0,
-					friction: 9,
-					tension: 68,
-					useNativeDriver: true,
-				}),
-				Animated.timing(opacity, {
-					toValue: 1,
-					duration: 280,
-					easing: Easing.out(Easing.cubic),
-					useNativeDriver: true,
-				}),
-			]).start();
-		}, [opacity, translateY]),
-	);
-
 	const openPersonalInfo = useCallback(() => {
 		navigation.navigate('PersonalInfo');
+	}, [navigation]);
+
+	const openProfileReviews = useCallback(() => {
+		navigation.navigate('ProfileReviews');
 	}, [navigation]);
 
 	const goSplash = useCallback(() => {
@@ -137,7 +118,7 @@ export default function ProfileScreen() {
 	);
 
 	return (
-		<Animated.View style={[styles.container, { opacity, transform: [{ translateY }] }]}> 
+		<View style={styles.container}>
 			<ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
 				{/* Header */}
 				<View style={styles.header}>
@@ -148,7 +129,7 @@ export default function ProfileScreen() {
 				</View>
 
 				{/* User Info */}
-				<TouchableOpacity style={styles.userInfo} activeOpacity={0.8} onPress={openPersonalInfo}>
+				<TouchableOpacity style={styles.userInfo} activeOpacity={0.8} onPress={openProfileReviews}>
 					<Image source={{uri: user.avatar}} style={styles.avatar} />
 					<View style={styles.userTextWrap}>
 						<Text style={styles.name}>{user.name}</Text>
@@ -206,9 +187,10 @@ export default function ProfileScreen() {
 				</TouchableOpacity>
 
 				{/* TODO(backend): Replace hardcoded profile/menu actions with API-driven user/account state. */}
+				{/* TODO(backend): ProfileReviews screen is currently hardcoded; replace with API post list and profile stats. */}
 				{/* TODO(backend): Connect logout to auth API (revoke token/session) before navigating to Splash. */}
 			</ScrollView>
-		</Animated.View>
+		</View>
 	);
 }
 

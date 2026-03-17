@@ -29,37 +29,37 @@ export default function PersonalInfoScreen() {
         <TouchableOpacity style={styles.backBtn} onPress={handleBack} activeOpacity={0.7}>
           <Ionicons name="arrow-back-outline" size={28} color="#fff" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Thong tin ca nhan</Text>
+        
       </View>
 
       <View style={styles.profileWrap}>
         <View style={styles.avatarWrap}>
           <Image source={{ uri: user.avatar }} style={styles.avatar} />
           <View style={styles.badge}>
-            <Ionicons name="lock-closed" size={14} color="#fff" />
+            <Ionicons name="camera" size={14} color="#fff" />
           </View>
         </View>
         <Text style={styles.username}>{user.username}</Text>
       </View>
 
-      <Text style={styles.sectionLabel}>Thong tin ca nhan</Text>
+      <Text style={styles.sectionLabel}>Thông tin cá nhân</Text>
 
       <View style={styles.fieldWrap}>
-        <Text style={styles.fieldLabel}>Ten cua ban</Text>
+        <Text style={styles.fieldLabel}>Tên của bạn</Text>
         <View style={styles.inputFake}>
           <Text style={styles.inputText}>{user.name}</Text>
         </View>
       </View>
 
       <View style={styles.fieldWrap}>
-        <Text style={styles.fieldLabel}>Dia chi email</Text>
+        <Text style={styles.fieldLabel}>Địa chỉ email</Text>
         <View style={styles.inputFake}>
           <Text style={styles.inputText}>{user.email}</Text>
         </View>
       </View>
 
       <TouchableOpacity style={styles.deleteBtn} activeOpacity={0.85}>
-        <Text style={styles.deleteText}>Xoa Tai Khoan</Text>
+        <Text style={styles.deleteText}>Xóa Tài Khoản</Text>
       </TouchableOpacity>
 
       {/* TODO(backend): Load and update profile data from API instead of hardcoded user object. */}
@@ -71,13 +71,15 @@ export default function PersonalInfoScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0f0b09',
-    paddingHorizontal: 20,
+		backgroundColor: '#181210',
   },
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingTop: 48,
+   flexDirection: 'row',
+		alignItems: 'center',
+		paddingTop: 36,
+		paddingBottom: 12,
+		paddingHorizontal: 16,
+		backgroundColor: 'transparent',
   },
   backBtn: {
     width: 36,
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     color: '#fff',
-    fontSize: 35,
+    fontSize: 24,
     fontWeight: '700',
   },
   profileWrap: {
@@ -124,6 +126,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   sectionLabel: {
+    paddingLeft: 16,
+    paddingRight: 16,
     color: '#6f6f6f',
     fontSize: 15,
     marginTop: 8,
@@ -132,10 +136,12 @@ const styles = StyleSheet.create({
   },
   fieldWrap: {
     marginBottom: 20,
+    paddingLeft: 16,
+    paddingRight: 16,
   },
   fieldLabel: {
     color: '#fff',
-    fontSize: 29,
+    fontSize: 16,
     fontWeight: '700',
     marginBottom: 8,
   },
@@ -148,9 +154,11 @@ const styles = StyleSheet.create({
   },
   inputText: {
     color: '#f2f2f2',
-    fontSize: 26,
+    fontSize: 16,
   },
   deleteBtn: {
+    paddingLeft: 16,
+    paddingRight: 16,
     marginTop: 'auto',
     marginBottom: 30,
     borderWidth: 1.5,
