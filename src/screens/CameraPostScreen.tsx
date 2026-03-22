@@ -241,6 +241,7 @@ const styles = StyleSheet.create({
   },
 
   avatar: {
+    bottom: 6,
     width: 40,
     height: 40,
     borderRadius: 20,
@@ -262,7 +263,7 @@ const styles = StyleSheet.create({
 
   dropdownMenu: {
     position: "absolute",
-    top: 35,
+    top: 85,
     backgroundColor: "#222",
     borderRadius: 12,
     overflow: "hidden",

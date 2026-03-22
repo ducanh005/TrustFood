@@ -19,6 +19,7 @@ import TermsOfUseScreen from '../screens/TermsOfUseScreen';
 import HelpCenterScreen from '../screens/HelpCenterScreen';
 import ShareAppScreen from '../screens/ShareAppScreen';
 import ChangePasswordScreen from '../screens/ChangePasswordScreen';
+import FriendsScreen from '../screens/FriendsScreen';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export type RootStackParamList = {
@@ -47,6 +48,7 @@ export type RootStackParamList = {
   HelpCenter: undefined;
   ShareApp: undefined;
   ChangePassword: undefined;
+  Friends: undefined;
 };
 
 export default function RootNavigator() {
@@ -77,6 +79,7 @@ export default function RootNavigator() {
       <Stack.Screen name="HelpCenter" component={HelpCenterScreen} />
       <Stack.Screen name="ShareApp" component={ShareAppScreen} />
       <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
+      <Stack.Screen name="Friends" component={FriendsScreen} />
     </Stack.Navigator>
   );
 }

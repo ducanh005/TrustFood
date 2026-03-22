@@ -1,27 +1,55 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Alert, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Ionicons from "@react-native-vector-icons/ionicons";
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../navigation/RootNavigator';
 
-export default function BottomBar() {
-  const takePicture = async () => {
+type BottomBarItem = 'star' | 'location' | 'notifications' | 'people';
 
+type BottomBarProps = {
+  activeItem?: BottomBarItem;
+};
+
+export default function BottomBar({ activeItem = 'star' }: BottomBarProps) {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  const openNotReadyFeature = (featureName: string) => {
+    Alert.alert('Tính năng đang phát triển', `${featureName} sẽ sớm được cập nhật.`);
   };
+
+  const openCamera = () => {
+    navigation.navigate('Camera');
+  };
+
+  const openDiscover = () => {
+    navigation.navigate('Discover');
+  };
+
+  const openFriends = () => {
+    navigation.navigate('Friends');
+  };
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity>
-        <Ionicons name="star-outline" size={35} color="#FFD400" />
+      <TouchableOpacity onPress={openDiscover}>
+        <Ionicons name="star-outline" size={35} color={activeItem === 'star' ? '#FFD400' : '#fff'} />
       </TouchableOpacity>
-      <TouchableOpacity>
-        <Ionicons name="location-outline" size={35} color="#fff" />
+      <TouchableOpacity onPress={() => openNotReadyFeature('Bản đồ')}>
+        <Ionicons name="location-outline" size={35} color={activeItem === 'location' ? '#FFD400' : '#fff'} />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.captureWrapper} onPress={takePicture}>
+      <TouchableOpacity style={styles.captureWrapper} onPress={openCamera}>
         <View style={styles.captureBtn} />
       </TouchableOpacity>
-      <TouchableOpacity>
-        <Ionicons name="notifications-outline" size={35} color="#fff" />
+      <TouchableOpacity onPress={() => openNotReadyFeature('Thông báo')}>
+        <Ionicons
+          name="notifications-outline"
+          size={35}
+          color={activeItem === 'notifications' ? '#FFD400' : '#fff'}
+        />
       </TouchableOpacity>
-      <TouchableOpacity>
-        <Ionicons name="people-circle-outline" size={35} color="#fff" />
+      <TouchableOpacity onPress={openFriends}>
+        <Ionicons name="people-circle-outline" size={35} color={activeItem === 'people' ? '#FFD400' : '#fff'} />
       </TouchableOpacity>
     </View>
   );

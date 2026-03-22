@@ -1,19 +1,16 @@
-import React, { useCallback } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput } from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/RootNavigator';
+import { getProfileData, updateProfileBio } from '../services/profileStore';
 
-const user = {
-  name: 'Gazel Stornof',
-  username: 'tepcon86',
-  email: 'gazelstornof99@gmail.com',
-  avatar: 'https://i.pravatar.cc/150?img=3',
-};
+const user = getProfileData();
 
 export default function PersonalInfoScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const [bio, setBio] = useState(user.bio);
 
   const handleBack = useCallback(() => {
     if (navigation.canGoBack()) {
@@ -22,6 +19,20 @@ export default function PersonalInfoScreen() {
     }
     navigation.navigate('Profile');
   }, [navigation]);
+
+  const handleBioChange = useCallback((nextBio: string) => {
+    setBio(nextBio);
+    updateProfileBio(nextBio);
+  }, []);
+
+  const handleCompleteEdit = useCallback(() => {
+    updateProfileBio(bio);
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+      return;
+    }
+    navigation.navigate('Profile');
+  }, [bio, navigation]);
 
   return (
     <View style={styles.container}>
@@ -45,6 +56,19 @@ export default function PersonalInfoScreen() {
       <Text style={styles.sectionLabel}>Thông tin cá nhân</Text>
 
       <View style={styles.fieldWrap}>
+        <Text style={styles.fieldLabel}>Sửa tiểu sử</Text>
+        <TextInput
+          value={bio}
+          onChangeText={handleBioChange}
+          multiline
+          textAlignVertical="top"
+          style={styles.bioInput}
+          placeholder="Nhập tiểu sử của bạn"
+          placeholderTextColor="#9d9d9d"
+        />
+      </View>
+
+      <View style={styles.fieldWrap}>
         <Text style={styles.fieldLabel}>Tên của bạn</Text>
         <View style={styles.inputFake}>
           <Text style={styles.inputText}>{user.name}</Text>
@@ -58,8 +82,8 @@ export default function PersonalInfoScreen() {
         </View>
       </View>
 
-      <TouchableOpacity style={styles.deleteBtn} activeOpacity={0.85}>
-        <Text style={styles.deleteText}>Xóa Tài Khoản</Text>
+      <TouchableOpacity style={styles.deleteBtn} activeOpacity={0.85} onPress={handleCompleteEdit}>
+        <Text style={styles.deleteText}>Hoàn tất chỉnh sửa</Text>
       </TouchableOpacity>
 
       {/* TODO(backend): Load and update profile data from API instead of hardcoded user object. */}
@@ -155,6 +179,16 @@ const styles = StyleSheet.create({
   inputText: {
     color: '#f2f2f2',
     fontSize: 16,
+  },
+  bioInput: {
+    backgroundColor: '#5a5a5a',
+    borderRadius: 18,
+    minHeight: 94,
+    paddingHorizontal: 18,
+    paddingVertical: 14,
+    color: '#f2f2f2',
+    fontSize: 16,
+    lineHeight: 22,
   },
   deleteBtn: {
     paddingLeft: 16,

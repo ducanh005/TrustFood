@@ -1,13 +1,14 @@
 
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/RootNavigator';
+import { getProfileData } from '../services/profileStore';
 
 type IconName = React.ComponentProps<typeof Ionicons>['name'];
-type MenuAction = 'personalInfo' | 'terms' | 'helpCenter' | 'shareApp' | 'changePassword';
+type MenuAction = 'terms' | 'helpCenter' | 'shareApp' | 'changePassword';
 
 type MenuItem = {
 	id: string;
@@ -17,21 +18,7 @@ type MenuItem = {
 	action: MenuAction;
 };
 
-const user = {
-	name: 'Gazel Stornof',
-	username: 'tepcon86',
-	avatar: 'https://i.pravatar.cc/150?img=3',
-};
-
-const menuItems: MenuItem[] = [
-	{
-		id: 'personal-info',
-		icon: 'person-outline',
-		title: 'Thông tin cá nhân',
-		desc: 'Tên người dùng và email của bạn',
-		action: 'personalInfo' as const,
-	},
-];
+const user = getProfileData();
 
 const settingItems: MenuItem[] = [
 	{
@@ -66,6 +53,13 @@ const settingItems: MenuItem[] = [
 
 export default function ProfileScreen() {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+	const [bio, setBio] = useState(user.bio);
+
+	useFocusEffect(
+		useCallback(() => {
+			setBio(getProfileData().bio);
+		}, []),
+	);
 
 	const handleBack = useCallback(() => {
 		if (navigation.canGoBack()) {
@@ -92,11 +86,6 @@ export default function ProfileScreen() {
 
 	const handleMenuPress = useCallback(
 		(action: MenuAction) => {
-			if (action === 'personalInfo') {
-				openPersonalInfo();
-				return;
-			}
-
 			if (action === 'terms') {
 				navigation.navigate('TermsOfUse');
 				return;
@@ -114,12 +103,16 @@ export default function ProfileScreen() {
 
 			navigation.navigate('ChangePassword');
 		},
-		[navigation, openPersonalInfo],
+		[navigation],
 	);
 
 	return (
 		<View style={styles.container}>
-			<ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+			<ScrollView
+				style={styles.contentScroll}
+				contentContainerStyle={styles.scrollContent}
+				showsVerticalScrollIndicator={false}
+			>
 				{/* Header */}
 				<View style={styles.header}>
 					<TouchableOpacity style={styles.backBtn} activeOpacity={0.7} onPress={handleBack}>
@@ -129,35 +122,25 @@ export default function ProfileScreen() {
 				</View>
 
 				{/* User Info */}
-				<TouchableOpacity style={styles.userInfo} activeOpacity={0.8} onPress={openProfileReviews}>
-					<Image source={{uri: user.avatar}} style={styles.avatar} />
-					<View style={styles.userTextWrap}>
-						<Text style={styles.name}>{user.name}</Text>
-						<Text style={styles.username}>{user.username}</Text>
-					</View>
-				</TouchableOpacity>
-
-				{/* Account Section */}
-				<Text style={styles.sectionLabel}>TÀI KHOẢN</Text>
-				<View style={styles.sectionBox}>
-					{menuItems.map((item) => (
-						<TouchableOpacity
-							key={item.id}
-							style={styles.menuItem}
-							activeOpacity={0.7}
-							onPress={() => handleMenuPress(item.action)}
-						>
-							<View style={styles.iconBox}>
-								<Ionicons name={item.icon} size={24} color="#FFD600" />
-							</View>
-							<View style={styles.menuTextWrap}>
-								<Text style={styles.menuTitle}>{item.title}</Text>
-								<Text style={styles.menuDesc}>{item.desc}</Text>
-							</View>
-							<Ionicons name="chevron-forward" size={22} color="#888" />
-						</TouchableOpacity>
-					))}
+				<View style={styles.userInfo}>
+					<TouchableOpacity style={styles.userProfileArea} activeOpacity={0.8} onPress={openProfileReviews}>
+						<Image source={{uri: user.avatar}} style={styles.avatar} />
+						<View style={styles.userTextWrap}>
+							<Text style={styles.name}>{user.name}</Text>
+							<Text style={styles.username}>{user.username}</Text>
+						</View>
+					</TouchableOpacity>
+					<TouchableOpacity
+						style={styles.editBioBtn}
+						activeOpacity={0.8}
+						onPress={openPersonalInfo}
+					>
+						<Ionicons name="pencil-outline" size={18} color="#181210" />
+					</TouchableOpacity>
 				</View>
+				<Text style={styles.bioText} numberOfLines={2} ellipsizeMode="tail">
+					{bio}
+				</Text>
 
 				{/* App Settings Section */}
 				<Text style={styles.sectionLabel}>APP CÀI ĐẶT</Text>
@@ -181,15 +164,16 @@ export default function ProfileScreen() {
 					))}
 				</View>
 
-				{/* Logout Button */}
-				<TouchableOpacity style={styles.logoutBtn} activeOpacity={0.8} onPress={goSplash}>
-					<Text style={styles.logoutText}>Đăng Xuất</Text>
-				</TouchableOpacity>
-
 				{/* TODO(backend): Replace hardcoded profile/menu actions with API-driven user/account state. */}
 				{/* TODO(backend): ProfileReviews screen is currently hardcoded; replace with API post list and profile stats. */}
 				{/* TODO(backend): Connect logout to auth API (revoke token/session) before navigating to Splash. */}
 			</ScrollView>
+
+			<View style={styles.logoutWrap}>
+				<TouchableOpacity style={styles.logoutBtn} activeOpacity={0.8} onPress={goSplash}>
+					<Text style={styles.logoutText}>Đăng Xuất</Text>
+				</TouchableOpacity>
+			</View>
 		</View>
 	);
 }
@@ -226,11 +210,24 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 16,
 		paddingVertical: 18,
 	},
+	userProfileArea: {
+		flex: 1,
+		flexDirection: 'row',
+		alignItems: 'center',
+	},
 	avatar: {
 		width: 60,
 		height: 60,
 		borderRadius: 30,
 		backgroundColor: '#888',
+	},
+	editBioBtn: {
+		width: 34,
+		height: 34,
+		borderRadius: 17,
+		backgroundColor: '#FFD600',
+		justifyContent: 'center',
+		alignItems: 'center',
 	},
 	name: {
 		color: '#fff',
@@ -241,6 +238,14 @@ const styles = StyleSheet.create({
 		color: '#aaa',
 		fontSize: 15,
 		marginTop: 2,
+	},
+	bioText: {
+		color: '#8f8f8f',
+		fontSize: 14,
+		lineHeight: 20,
+		paddingHorizontal: 16,
+		marginTop: -6,
+		marginBottom: 8,
 	},
 	sectionLabel: {
 		color: '#aaa',
@@ -282,8 +287,17 @@ const styles = StyleSheet.create({
 	userTextWrap: {
 		marginLeft: 16,
 	},
+	contentScroll: {
+		flex: 1,
+	},
 	scrollContent: {
-		paddingBottom: 32,
+		paddingBottom: 20,
+	},
+	logoutWrap: {
+		paddingHorizontal: 32,
+		paddingTop: 10,
+		paddingBottom: 24,
+		backgroundColor: '#181210',
 	},
 	menuTitle: {
 		color: '#fff',
@@ -296,8 +310,6 @@ const styles = StyleSheet.create({
 		marginTop: 2,
 	},
 	logoutBtn: {
-		marginTop: 28,
-		marginHorizontal: 32,
 		backgroundColor: 'transparent',
 		borderWidth: 1.5,
 		borderColor: '#FF3B30',
