@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/RootNavigator';
+import { RootStackParamList } from '../../navigation/RootNavigator';
 
 const helpItems = [
   { id: 'posting', title: 'Cách tạo bài đăng đánh giá món ăn', desc: 'Hướng dẫn đăng ảnh, chọn địa điểm và chấm điểm.' },

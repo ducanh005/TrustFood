@@ -8,11 +8,11 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import {Typography} from '../theme/typography';
-import { useTheme } from '../hooks/useTheme';
+import {Typography} from '../../theme/typography';
+import { useTheme } from '../../hooks/useTheme';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/RootNavigator';
+import { RootStackParamList } from '../../navigation/RootNavigator';
 
 
 export default function SplashScreen() {
@@ -23,7 +23,7 @@ export default function SplashScreen() {
     <View style={{ flex: 1 }}>
       {/* Ảnh nền */}
       <ImageBackground
-        source={require('../assets/images/Background_1.jpg')}
+        source={require('../../assets/images/Background_1.jpg')}
         resizeMode="cover"
         style={StyleSheet.absoluteFill}
       />
@@ -38,7 +38,7 @@ export default function SplashScreen() {
       <View style={styles.container}>
         <View style={styles.content}>
           <Image
-            source={require('../assets/icons/Logo.png')}
+            source={require('../../assets/icons/Logo.png')}
             style={styles.logo}
           />
 

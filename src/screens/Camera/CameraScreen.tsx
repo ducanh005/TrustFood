@@ -8,7 +8,7 @@ import {
 import { Camera, useCameraDevice } from "react-native-vision-camera";
 import { useNavigation } from "@react-navigation/native";
 import Ionicons from "@react-native-vector-icons/ionicons";
-import { openPhoneGallery } from "../utils/galleryHelper";
+import { openPhoneGallery } from "../../utils/galleryHelper";
 
 export default function CameraScreen() {
   const device = useCameraDevice("back");

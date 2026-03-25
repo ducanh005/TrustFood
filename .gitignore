@@ -40,6 +40,24 @@ local.properties
 node_modules/
 npm-debug.log
 yarn-error.log
+yarn-debug.log*
+pnpm-debug.log*
+
+# logs
+*.log
+
+# local env files
+.env
+.env.local
+.env.*.local
+
+# Metro / React Native cache
+.expo/
+.expo-shared/
+.bundle/
+.tmp/
+tmp/
+*.tmp
 
 # fastlane
 #
@@ -65,6 +83,15 @@ yarn-error.log
 
 # testing
 /coverage
+
+# React Native / Bundler outputs
+android/app/build/
+android/build/
+ios/build/
+dist/
+
+# VS Code and local editor settings
+.vscode/
 
 # Yarn
 .yarn/*

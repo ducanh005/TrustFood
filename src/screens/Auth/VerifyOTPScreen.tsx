@@ -5,8 +5,8 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import { AppText } from "../components/AppText";
-import { useTheme } from "../hooks/useTheme";
+import { AppText } from "../../components/AppText";
+import { useTheme } from "../../hooks/useTheme";
 import { useNavigation } from "@react-navigation/native";
 
 export default function VerifyOTPScreen() {

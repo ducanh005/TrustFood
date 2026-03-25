@@ -1,48 +1,45 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
-import { AppText } from '../components/AppText';
-import { useTheme } from '../hooks/useTheme';
+import { AppText } from '../../components/AppText';
+import { useTheme } from '../../hooks/useTheme';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/RootNavigator';
+import { RootStackParamList } from '../../navigation/RootNavigator';
 
-export default function CreatePasswordScreen() {
+export default function SetNameScreen() {
   const theme = useTheme();
   const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamList, 'CreatePassword'>>();
+    useNavigation<NativeStackNavigationProp<RootStackParamList, 'SetName'>>();
 
   const route = useRoute();
-  const { email } = route.params as { email: string };
+  const { email, password } = route.params as { email: string; password: string };
 
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const [error, setError] = useState('');
 
-  const handleContinue = () => {
-    if (password.length < 8) {
-      setError('Mật khẩu phải có ít nhất 8 ký tự');
+  const handleContinue = async () => {
+    if (!name.trim()) {
+      setError('Vui lòng nhập tên');
       return;
     }
 
-    navigation.navigate('SetName', { email, password });
+    // TODO: call API tạo tài khoản
+    console.log({ email, password, name });
+
+    navigation.navigate('Login');
   };
 
   return (
     <View style={styles.container}>
-      <AppText variant="H3" style={styles.title}>Chọn mật khẩu</AppText>
+      <AppText variant="H3" style={styles.title}>Tên của bạn</AppText>
 
-      <AppText style={styles.label}>Mật khẩu</AppText>
       <TextInput
-        placeholder="Nhập mật khẩu"
+        placeholder="Tên của bạn"
         placeholderTextColor="#666"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
+        value={name}
+        onChangeText={setName}
         style={[styles.input, error && styles.inputError]}
       />
-
-      <AppText style={styles.hint}>
-        Mật khẩu của bạn tối thiểu 8 ký tự
-      </AppText>
 
       {error ? <AppText style={styles.error}>{error}</AppText> : null}
 
@@ -59,7 +56,6 @@ export default function CreatePasswordScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#000', padding: 20, justifyContent: 'center' },
   title: { color: '#fff', textAlign: 'center', marginBottom: 32 },
-  label: { color: '#fff', marginBottom: 8 },
   input: {
     height: 50,
     backgroundColor: '#1c1c1c',
@@ -68,7 +64,6 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   inputError: { borderWidth: 1, borderColor: 'red' },
-  hint: { color: '#aaa', marginTop: 6 },
   error: { color: 'red', marginTop: 6 },
   button: {
     height: 56,

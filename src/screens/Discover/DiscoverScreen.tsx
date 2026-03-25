@@ -1,11 +1,11 @@
 import React, { useCallback, useState } from 'react';
 import { View, StyleSheet, FlatList, ActivityIndicator, RefreshControl } from 'react-native';
-import {Navbar} from '../components/Navbar';
-import BottomBar from '../components/BottomBar';
-import PostItem, { Post } from '../components/PostItem';
+import {Navbar} from '../../components/Navbar';
+import BottomBar from '../../components/BottomBar';
+import PostItem, { Post } from '../../components/PostItem';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/RootNavigator';
+import { RootStackParamList } from '../../navigation/RootNavigator';
 
 
 // NOTE: This screen uses fake data for local development/demo.

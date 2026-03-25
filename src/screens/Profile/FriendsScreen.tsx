@@ -12,8 +12,8 @@ import {
   View,
 } from 'react-native';
 import Ionicons from '@react-native-vector-icons/ionicons';
-import BottomBar from '../components/BottomBar';
-import { FriendSearchItem, searchFriendsApi } from '../services/friendService';
+import BottomBar from '../../components/BottomBar';
+import { FriendSearchItem, searchFriendsApi } from '../../services/friendService';
 
 type Friend = {
   id: string;

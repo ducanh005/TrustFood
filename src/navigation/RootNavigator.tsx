@@ -1,25 +1,30 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import SplashScreen from '../screens/SplashScreen';
-import AuthIntroScreen from '../screens/AuthIntroScreen';
-import LoginScreen from '../screens/LoginScreen';
-import RegisterScreen from '../screens/RegisterScreen';
-import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
-import VerifyOTPScreen from '../screens/VerifyOTPScreen';
-import ResetPasswordScreen from '../screens/ResetPasswordScreen';
-import CreatePasswordScreen from '../screens/CreatePasswordScreen';
-import SetNameScreen from '../screens/SetNameScreen';
-import CameraScreen from '../screens/CameraScreen';
-import CameraPostScreen from '../screens/CameraPostScreen';
-import DiscoverScreen from '../screens/DiscoverScreen';
-import ProfileScreen from '../screens/ProfileScreen';
-import ProfileReviewsScreen from '../screens/ProfileReviewsScreen';
-import PersonalInfoScreen from '../screens/PersonalInfoScreen';
-import TermsOfUseScreen from '../screens/TermsOfUseScreen';
-import HelpCenterScreen from '../screens/HelpCenterScreen';
-import ShareAppScreen from '../screens/ShareAppScreen';
-import ChangePasswordScreen from '../screens/ChangePasswordScreen';
-import FriendsScreen from '../screens/FriendsScreen';
+import { SplashScreen } from '../screens/Core';
+import {
+  AuthIntroScreen,
+  LoginScreen,
+  RegisterScreen,
+  ForgotPasswordScreen,
+  VerifyOTPScreen,
+  ResetPasswordScreen,
+  CreatePasswordScreen,
+  SetNameScreen,
+} from '../screens/Auth';
+import { CameraScreen, CameraPostScreen } from '../screens/Camera';
+import { DiscoverScreen } from '../screens/Discover';
+import {
+  ProfileScreen,
+  ProfileReviewsScreen,
+  PersonalInfoScreen,
+  ChangePasswordScreen,
+  FriendsScreen,
+} from '../screens/Profile';
+import {
+  TermsOfUseScreen,
+  HelpCenterScreen,
+  ShareAppScreen,
+} from '../screens/Settings';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export type RootStackParamList = {

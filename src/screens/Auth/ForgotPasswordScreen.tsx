@@ -7,11 +7,11 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import { AppText } from "../components/AppText";
-import { useTheme } from "../hooks/useTheme";
+import { AppText } from "../../components/AppText";
+import { useTheme } from "../../hooks/useTheme";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../navigation/RootNavigator";
+import { RootStackParamList } from "../../navigation/RootNavigator";
 
 export default function ForgotPasswordScreen() {
   const theme = useTheme();

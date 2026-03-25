@@ -5,11 +5,11 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {AppText} from '../components/AppText';
-import { useTheme } from '../hooks/useTheme';
+import {AppText} from '../../components/AppText';
+import { useTheme } from '../../hooks/useTheme';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/RootNavigator';
+import { RootStackParamList } from '../../navigation/RootNavigator';
 
 export default function AuthIntroScreen() {
   const theme = useTheme();
@@ -19,7 +19,7 @@ export default function AuthIntroScreen() {
   return (
     <View style={[styles.container, { backgroundColor: '#000' }]}>
       <Image
-        source={require('../assets/images/Background_2.png')}
+        source={require('../../assets/images/Background_2.png')}
         style={styles.image}
         resizeMode="contain"
       />
@@ -54,7 +54,7 @@ export default function AuthIntroScreen() {
       <TouchableOpacity style={styles.outlineBtn}>
         <View style={styles.btnContent}>
           <Image
-            source={require('../assets/icons/Google__G__logo.svg.png')}
+            source={require('../../assets/icons/Google__G__logo.svg.png')}
             style={styles.icon}
             resizeMode="contain"
           />

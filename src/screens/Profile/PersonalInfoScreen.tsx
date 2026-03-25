@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, TextInput } from 'reac
 import Ionicons from '@react-native-vector-icons/ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/RootNavigator';
-import { getProfileData, updateProfileBio } from '../services/profileStore';
+import { RootStackParamList } from '../../navigation/RootNavigator';
+import { getProfileData, updateProfileBio } from '../../services/profileStore';
 
 const user = getProfileData();
 

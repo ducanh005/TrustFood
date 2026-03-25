@@ -12,8 +12,8 @@ import {
 } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import Ionicons from "@react-native-vector-icons/ionicons";
-import { openPhoneGallery } from "../utils/galleryHelper";
-import { uploadPhoto } from "../services/photoService";
+import { openPhoneGallery } from "../../utils/galleryHelper";
+import { uploadPhoto } from "../../services/photoService";
 
 export default function CameraPostScreen() {
   const route = useRoute<any>();

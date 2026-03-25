@@ -4,8 +4,8 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'rea
 import Ionicons from '@react-native-vector-icons/ionicons';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../navigation/RootNavigator';
-import { getProfileData } from '../services/profileStore';
+import { RootStackParamList } from '../../navigation/RootNavigator';
+import { getProfileData } from '../../services/profileStore';
 
 type IconName = React.ComponentProps<typeof Ionicons>['name'];
 type MenuAction = 'terms' | 'helpCenter' | 'shareApp' | 'changePassword';
