@@ -1,6 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { SplashScreen } from '../screens/Core';
+import { DevLauncherScreen, SplashScreen } from '../screens/Core';
 import {
   AuthIntroScreen,
   LoginScreen,
@@ -26,9 +26,11 @@ import {
   ShareAppScreen,
 } from '../screens/Settings';
 import { useAuth } from '../context/AuthContext';
+import { DEV_BYPASS_AUTH, DEV_ENTRY_SCREEN } from '../config/api';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export type RootStackParamList = {
+  DevLauncher: undefined;
   Splash: undefined;
   AuthIntro: undefined;
   Login: undefined;
@@ -59,18 +61,27 @@ export type RootStackParamList = {
 
 export default function RootNavigator() {
   const { status } = useAuth();
+  const isDevBypass = __DEV__ && DEV_BYPASS_AUTH;
+  const isAuthenticated = status === 'authenticated' || isDevBypass;
+
+  const initialRoute: keyof RootStackParamList = isDevBypass
+    ? DEV_ENTRY_SCREEN
+    : isAuthenticated
+      ? 'Camera'
+      : 'Splash';
 
   return (
     <Stack.Navigator
-      initialRouteName={status === 'authenticated' ? 'Camera' : 'Splash'}
+      initialRouteName={initialRoute}
       screenOptions={{
         headerShown: false,
         contentStyle: { backgroundColor: '#181210' },
         animation: 'none',
       }}
     >
-      {status !== 'authenticated' ? (
+      {!isAuthenticated ? (
         <>
+          <Stack.Screen name="DevLauncher" component={DevLauncherScreen} />
           <Stack.Screen name="Splash" component={SplashScreen} />
           <Stack.Screen name="AuthIntro" component={AuthIntroScreen} />
           <Stack.Screen name="Login" component={LoginScreen} />
@@ -83,6 +94,16 @@ export default function RootNavigator() {
         </>
       ) : (
         <>
+          {isDevBypass ? <Stack.Screen name="DevLauncher" component={DevLauncherScreen} /> : null}
+          {isDevBypass ? <Stack.Screen name="Splash" component={SplashScreen} /> : null}
+          {isDevBypass ? <Stack.Screen name="AuthIntro" component={AuthIntroScreen} /> : null}
+          {isDevBypass ? <Stack.Screen name="Login" component={LoginScreen} /> : null}
+          {isDevBypass ? <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} /> : null}
+          {isDevBypass ? <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} /> : null}
+          {isDevBypass ? <Stack.Screen name="VerifyOTP" component={VerifyOTPScreen} /> : null}
+          {isDevBypass ? <Stack.Screen name="Register" component={RegisterScreen} /> : null}
+          {isDevBypass ? <Stack.Screen name="CreatePassword" component={CreatePasswordScreen} /> : null}
+          {isDevBypass ? <Stack.Screen name="SetName" component={SetNameScreen} /> : null}
           <Stack.Screen name="Camera" component={CameraScreen} />
           <Stack.Screen name="Discover" component={DiscoverScreen} />
           <Stack.Screen name="Send" component={CameraPostScreen} />

@@ -4,6 +4,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Text,
+  Linking,
 } from "react-native";
 import { Camera, useCameraDevice } from "react-native-vision-camera";
 import { useNavigation } from "@react-navigation/native";
@@ -26,7 +27,32 @@ export default function CameraScreen() {
     })();
   }, []);
 
-  if (!device || !hasPermission) return null;
+  if (!device) {
+    return (
+      <View style={styles.centerFallback}>
+        <Text style={styles.fallbackTitle}>Không tìm thấy camera</Text>
+        <Text style={styles.fallbackText}>Thiết bị/emulator hiện tại không có camera khả dụng.</Text>
+        <TouchableOpacity style={styles.fallbackBtn} onPress={() => navigation.navigate('Discover')}>
+          <Text style={styles.fallbackBtnText}>Mở Khám phá</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+
+  if (!hasPermission) {
+    return (
+      <View style={styles.centerFallback}>
+        <Text style={styles.fallbackTitle}>Chưa có quyền Camera</Text>
+        <Text style={styles.fallbackText}>Hãy cấp quyền camera để dùng màn chụp ảnh.</Text>
+        <TouchableOpacity style={styles.fallbackBtn} onPress={() => Linking.openSettings()}>
+          <Text style={styles.fallbackBtnText}>Mở Cài đặt</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.fallbackGhostBtn} onPress={() => navigation.navigate('Discover')}>
+          <Text style={styles.fallbackGhostText}>Bỏ qua và vào Khám phá</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
 
   const takePicture = async () => {
     const photo = await camera.current?.takePhoto();
@@ -127,6 +153,45 @@ export default function CameraScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: "#000" },
+  centerFallback: {
+    flex: 1,
+    backgroundColor: '#000',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 24,
+  },
+  fallbackTitle: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: '700',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  fallbackText: {
+    color: '#bbb',
+    fontSize: 14,
+    textAlign: 'center',
+    marginBottom: 18,
+  },
+  fallbackBtn: {
+    backgroundColor: '#FFD400',
+    paddingHorizontal: 18,
+    paddingVertical: 10,
+    borderRadius: 18,
+    marginBottom: 10,
+  },
+  fallbackBtnText: {
+    color: '#111',
+    fontWeight: '700',
+  },
+  fallbackGhostBtn: {
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+  },
+  fallbackGhostText: {
+    color: '#FFD400',
+    fontSize: 13,
+  },
 
   topBar: {
     position: "absolute",
