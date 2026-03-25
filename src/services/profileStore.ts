@@ -6,6 +6,8 @@ type ProfileData = {
   bio: string;
 };
 
+export type UpdateProfilePayload = Partial<Pick<ProfileData, 'name' | 'email' | 'bio'>>;
+
 const profileData: ProfileData = {
   name: 'Gazel Stornof',
   username: 'tepcon86',
@@ -15,9 +17,25 @@ const profileData: ProfileData = {
 };
 
 export function getProfileData(): ProfileData {
-  return profileData;
+  return { ...profileData };
 }
 
 export function updateProfileBio(nextBio: string): void {
   profileData.bio = nextBio;
+}
+
+export function updateProfileData(payload: UpdateProfilePayload): ProfileData {
+  if (payload.name !== undefined) {
+    profileData.name = payload.name;
+  }
+
+  if (payload.email !== undefined) {
+    profileData.email = payload.email;
+  }
+
+  if (payload.bio !== undefined) {
+    profileData.bio = payload.bio;
+  }
+
+  return { ...profileData };
 }

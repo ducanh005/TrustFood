@@ -60,34 +60,67 @@ function generateFakePosts(page = 1, perPage = 5): Post[] {
   return items;
 }
 
+type DiscoverFeedParams = {
+  page: number;
+  perPage: number;
+};
+
+async function fetchDiscoverFeed(params: DiscoverFeedParams): Promise<Post[]> {
+  // Backend-ready signature: replace function body with API call later.
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(generateFakePosts(params.page, params.perPage));
+    }, 300);
+  });
+}
+
 export default function DiscoverScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const [posts, setPosts] = useState<Post[]>(() => generateFakePosts(1, 6));
+  const [posts, setPosts] = useState<Post[]>([]);
   const [page, setPage] = useState(1);
   const [loadingMore, setLoadingMore] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
 
-  const loadMore = useCallback(() => {
+  React.useEffect(() => {
+    let mounted = true;
+
+    (async () => {
+      const firstPage = await fetchDiscoverFeed({ page: 1, perPage: 6 });
+      if (!mounted) {
+        return;
+      }
+      setPosts(firstPage);
+    })();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  const loadMore = useCallback(async () => {
     if (loadingMore) return;
     setLoadingMore(true);
-    // simulate network delay
-    setTimeout(() => {
-      const nextPage = page + 1;
-      const more = generateFakePosts(nextPage, 5);
+    const nextPage = page + 1;
+
+    try {
+      const more = await fetchDiscoverFeed({ page: nextPage, perPage: 5 });
       setPosts((p) => [...p, ...more]);
       setPage(nextPage);
+    } finally {
       setLoadingMore(false);
-    }, 800);
+    }
   }, [loadingMore, page]);
 
-  const onRefresh = useCallback(() => {
+  const onRefresh = useCallback(async () => {
     setRefreshing(true);
-    // simulate refresh: replace list
-    setTimeout(() => {
-      setPosts(generateFakePosts(1, 6));
+
+    try {
+      const refreshed = await fetchDiscoverFeed({ page: 1, perPage: 6 });
+      setPosts(refreshed);
       setPage(1);
+    } finally {
       setRefreshing(false);
-    }, 700);
+    }
   }, []);
 
   // Like handler (simulate API call)
@@ -135,7 +168,7 @@ export default function DiscoverScreen() {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-        contentContainerStyle={{ paddingBottom: 70 }}
+        contentContainerStyle={styles.listContent}
       />
       <BottomBar />
     </View>
@@ -145,4 +178,5 @@ export default function DiscoverScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#0b0b0b' },
   loadingMore: { padding: 16 },
+  listContent: { paddingBottom: 70 },
 });

@@ -165,7 +165,6 @@ export default function ProfileScreen() {
 
 				{/* TODO(backend): Replace hardcoded profile/menu actions with API-driven user/account state. */}
 				{/* TODO(backend): ProfileReviews screen is currently hardcoded; replace with API post list and profile stats. */}
-				{/* TODO(backend): Connect logout to auth API (revoke token/session) before navigating to Splash. */}
 			</ScrollView>
 
 			<View style={styles.logoutWrap}>

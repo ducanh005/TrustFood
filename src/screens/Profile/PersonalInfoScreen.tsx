@@ -4,13 +4,15 @@ import Ionicons from '@react-native-vector-icons/ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/RootNavigator';
-import { getProfileData, updateProfileBio } from '../../services/profileStore';
-
-const user = getProfileData();
+import { getProfileData, updateProfileData } from '../../services/profileStore';
 
 export default function PersonalInfoScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const [bio, setBio] = useState(user.bio);
+  const [profile, setProfile] = useState(() => getProfileData());
+  const [bio, setBio] = useState(profile.bio);
+  const [name, setName] = useState(profile.name);
+  const [email, setEmail] = useState(profile.email);
+  const [error, setError] = useState('');
 
   const handleBack = useCallback(() => {
     if (navigation.canGoBack()) {
@@ -22,17 +24,33 @@ export default function PersonalInfoScreen() {
 
   const handleBioChange = useCallback((nextBio: string) => {
     setBio(nextBio);
-    updateProfileBio(nextBio);
   }, []);
 
   const handleCompleteEdit = useCallback(() => {
-    updateProfileBio(bio);
+    if (!name.trim()) {
+      setError('Vui long nhap ten');
+      return;
+    }
+
+    if (!email.includes('@')) {
+      setError('Email khong hop le');
+      return;
+    }
+
+    setError('');
+    const next = updateProfileData({
+      name: name.trim(),
+      email: email.trim(),
+      bio,
+    });
+    setProfile(next);
+
     if (navigation.canGoBack()) {
       navigation.goBack();
       return;
     }
     navigation.navigate('Profile');
-  }, [bio, navigation]);
+  }, [bio, email, name, navigation]);
 
   return (
     <View style={styles.container}>
@@ -45,12 +63,12 @@ export default function PersonalInfoScreen() {
 
       <View style={styles.profileWrap}>
         <View style={styles.avatarWrap}>
-          <Image source={{ uri: user.avatar }} style={styles.avatar} />
+          <Image source={{ uri: profile.avatar }} style={styles.avatar} />
           <View style={styles.badge}>
             <Ionicons name="camera" size={14} color="#fff" />
           </View>
         </View>
-        <Text style={styles.username}>{user.username}</Text>
+        <Text style={styles.username}>{profile.username}</Text>
       </View>
 
       <Text style={styles.sectionLabel}>Thông tin cá nhân</Text>
@@ -70,17 +88,29 @@ export default function PersonalInfoScreen() {
 
       <View style={styles.fieldWrap}>
         <Text style={styles.fieldLabel}>Tên của bạn</Text>
-        <View style={styles.inputFake}>
-          <Text style={styles.inputText}>{user.name}</Text>
-        </View>
+        <TextInput
+          value={name}
+          onChangeText={setName}
+          style={styles.inputEdit}
+          placeholder="Nhap ten"
+          placeholderTextColor="#9d9d9d"
+        />
       </View>
 
       <View style={styles.fieldWrap}>
         <Text style={styles.fieldLabel}>Địa chỉ email</Text>
-        <View style={styles.inputFake}>
-          <Text style={styles.inputText}>{user.email}</Text>
-        </View>
+        <TextInput
+          value={email}
+          onChangeText={setEmail}
+          style={styles.inputEdit}
+          placeholder="Nhap email"
+          placeholderTextColor="#9d9d9d"
+          autoCapitalize="none"
+          keyboardType="email-address"
+        />
       </View>
+
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
 
       <TouchableOpacity style={styles.deleteBtn} activeOpacity={0.85} onPress={handleCompleteEdit}>
         <Text style={styles.deleteText}>Hoàn tất chỉnh sửa</Text>
@@ -169,14 +199,12 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginBottom: 8,
   },
-  inputFake: {
+  inputEdit: {
     backgroundColor: '#5a5a5a',
     borderRadius: 28,
     minHeight: 54,
     paddingHorizontal: 18,
     justifyContent: 'center',
-  },
-  inputText: {
     color: '#f2f2f2',
     fontSize: 16,
   },
@@ -200,6 +228,12 @@ const styles = StyleSheet.create({
     borderRadius: 28,
     paddingVertical: 14,
     alignItems: 'center',
+  },
+  errorText: {
+    color: '#ff7b7b',
+    marginTop: -8,
+    marginBottom: 8,
+    paddingHorizontal: 16,
   },
   deleteText: {
     color: '#FF3030',
