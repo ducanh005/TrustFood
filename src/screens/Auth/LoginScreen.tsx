@@ -12,26 +12,44 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 import { Toggle } from '../../components/Toggle';
+import { useAuth } from '../../context/AuthContext';
+import { ApiError } from '../../services/httpClient';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 
 export default function LoginScreen() {
   const theme = useTheme();
   const navigation = useNavigation<NavigationProp>();
+  const { login } = useAuth();
 
   const [remember, setRemember] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [identifier, setIdentifier] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleLogin = async () => {
-  const isSuccess = true; // 🔥 FAKE LOGIN
+    if (!identifier.trim() || !password.trim()) {
+      setError('Vui lòng nhập đầy đủ tài khoản và mật khẩu');
+      return;
+    }
 
-  if (isSuccess) {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Camera' }],
-    });
-  }
-};
+    setError('');
+    setLoading(true);
+
+    try {
+      await login({
+        identifier: identifier.trim(),
+        password,
+      });
+    } catch (e) {
+      const message = e instanceof ApiError ? e.message : 'Đăng nhập thất bại';
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <View style={[styles.container, { backgroundColor: '#000' }]}>
       <View style={styles.content}>
@@ -51,7 +69,10 @@ export default function LoginScreen() {
         <TextInput
           placeholder="Tên đăng nhập"
           placeholderTextColor="#666"
+          value={identifier}
+          onChangeText={setIdentifier}
           style={styles.input}
+          autoCapitalize="none"
         />
 
         <AppText variant="H7" style={{ color: theme.colors.background, marginBottom: 8 }}>
@@ -63,6 +84,8 @@ export default function LoginScreen() {
             placeholder="Nhập mật khẩu"
             placeholderTextColor="#666"
             secureTextEntry={!showPassword}
+            value={password}
+            onChangeText={setPassword}
             style={[styles.input, { paddingRight: 48 }]}
           />
           <TouchableOpacity
@@ -98,11 +121,18 @@ export default function LoginScreen() {
 
       <View style={styles.content2}>
         <TouchableOpacity
-          style={[styles.primaryBtn, { backgroundColor: theme.colors.primary }]}
+          style={[styles.primaryBtn, { backgroundColor: theme.colors.primary, opacity: loading ? 0.7 : 1 }]}
           onPress={handleLogin}
+          disabled={loading}
         >
-          <AppText variant="P1_Medium">Đăng nhập</AppText>
+          <AppText variant="P1_Medium">{loading ? 'Đang đăng nhập...' : 'Đăng nhập'}</AppText>
         </TouchableOpacity>
+
+        {error ? (
+          <AppText variant="P4_Regular" style={styles.errorText}>
+            {error}
+          </AppText>
+        ) : null}
 
        <View style={styles.rowCenter}>
         <AppText variant="H6" style={[styles.addText, { color: theme.colors.background, marginTop: 0 }]}>
@@ -195,6 +225,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 20,
     color: '#c0c0c0',
+  },
+  errorText: {
+    color: '#ff7b7b',
+    textAlign: 'center',
+    marginTop: 12,
   },
   rowCenter: {
     flexDirection: 'row',

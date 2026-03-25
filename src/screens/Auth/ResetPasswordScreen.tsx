@@ -7,21 +7,28 @@ import {
 } from "react-native";
 import { AppText } from "../../components/AppText";
 import { useTheme } from "../../hooks/useTheme";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../navigation/RootNavigator';
+import { resetPassword } from '../../services/authService';
+import { ApiError } from '../../services/httpClient';
 
 export default function ResetPasswordScreen() {
   const theme = useTheme();
-  const navigation = useNavigation();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'ResetPassword'>>();
+  const route = useRoute();
+  const { email, otp } = route.params as { email: string; otp: string };
 
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const validatePassword = (value: string) => {
     return value.length >= 8;
   };
 
-  const handleComplete = () => {
+  const handleComplete = async () => {
     if (!validatePassword(password)) {
       setError("Mật khẩu tối thiểu 8 ký tự");
       return;
@@ -32,7 +39,26 @@ export default function ResetPasswordScreen() {
       return;
     }
 
-    navigation.navigate("Login" as never);
+    setError('');
+    setLoading(true);
+
+    try {
+      await resetPassword({
+        email,
+        otp,
+        newPassword: password,
+      });
+
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Login' }],
+      });
+    } catch (e) {
+      const message = e instanceof ApiError ? e.message : 'Không thể đặt lại mật khẩu';
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -62,10 +88,11 @@ export default function ResetPasswordScreen() {
       {error ? <AppText style={styles.error}>{error}</AppText> : null}
 
       <TouchableOpacity
-        style={[styles.button, { backgroundColor: theme.colors.primary }]}
+        style={[styles.button, { backgroundColor: theme.colors.primary, opacity: loading ? 0.7 : 1 }]}
         onPress={handleComplete}
+        disabled={loading}
       >
-        <AppText>Hoàn tất</AppText>
+        <AppText>{loading ? 'Đang cập nhật...' : 'Hoàn tất'}</AppText>
       </TouchableOpacity>
     </View>
   );

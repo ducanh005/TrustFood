@@ -12,6 +12,8 @@ import { useTheme } from "../../hooks/useTheme";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../navigation/RootNavigator";
+import { requestForgotPasswordOtp } from '../../services/authService';
+import { ApiError } from '../../services/httpClient';
 
 export default function ForgotPasswordScreen() {
   const theme = useTheme();
@@ -43,8 +45,16 @@ export default function ForgotPasswordScreen() {
       setError("");
       setLoading(true);
 
-      // TODO: call API gửi OTP
-      await new Promise<void>(resolve => setTimeout(resolve, 1000));
+      try {
+        await requestForgotPasswordOtp(email.trim());
+      } catch (e) {
+        const message = e instanceof ApiError ? e.message : 'Không thể gửi OTP';
+        setError(message);
+        setLoading(false);
+        return;
+      }
+
+      await new Promise<void>(resolve => setTimeout(resolve, 250));
 
       setLoading(false);
       setStep("otp");
@@ -58,7 +68,7 @@ export default function ForgotPasswordScreen() {
       }
 
       setError("");
-      navigation.navigate("ResetPassword", { email, otp });
+      navigation.navigate('ResetPassword', { email: email.trim(), otp: otp.trim() });
     }
   };
 

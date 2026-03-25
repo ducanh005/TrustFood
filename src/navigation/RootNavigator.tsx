@@ -25,6 +25,7 @@ import {
   HelpCenterScreen,
   ShareAppScreen,
 } from '../screens/Settings';
+import { useAuth } from '../context/AuthContext';
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export type RootStackParamList = {
@@ -39,8 +40,8 @@ export type RootStackParamList = {
     email: string;
     otp: string;
   };
-  CreatePassword: { email: string };
-  SetName: { email: string; password: string };
+  CreatePassword: { email: string; otp: string };
+  SetName: { email: string; password: string; otp: string };
   Camera: undefined;
   Discover: undefined;
   Preview: { imageUri: string };
@@ -57,34 +58,44 @@ export type RootStackParamList = {
 };
 
 export default function RootNavigator() {
+  const { status } = useAuth();
+
   return (
     <Stack.Navigator
+      initialRouteName={status === 'authenticated' ? 'Camera' : 'Splash'}
       screenOptions={{
         headerShown: false,
         contentStyle: { backgroundColor: '#181210' },
         animation: 'none',
       }}
     >
-      <Stack.Screen name="Splash" component={SplashScreen} />
-      <Stack.Screen name="AuthIntro" component={AuthIntroScreen} />
-      <Stack.Screen name="Login" component={LoginScreen} />
-      <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
-      <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
-      <Stack.Screen name="VerifyOTP" component={VerifyOTPScreen} />
-      <Stack.Screen name="Register" component={RegisterScreen} />
-      <Stack.Screen name="CreatePassword" component={CreatePasswordScreen} />
-      <Stack.Screen name="SetName" component={SetNameScreen} />
-      <Stack.Screen name="Camera" component={CameraScreen} />
-      <Stack.Screen name="Discover" component={DiscoverScreen} />
-      <Stack.Screen name="Send" component={CameraPostScreen} />
-      <Stack.Screen name="Profile" component={ProfileScreen} />
-      <Stack.Screen name="ProfileReviews" component={ProfileReviewsScreen} />
-      <Stack.Screen name="PersonalInfo" component={PersonalInfoScreen} />
-      <Stack.Screen name="TermsOfUse" component={TermsOfUseScreen} />
-      <Stack.Screen name="HelpCenter" component={HelpCenterScreen} />
-      <Stack.Screen name="ShareApp" component={ShareAppScreen} />
-      <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
-      <Stack.Screen name="Friends" component={FriendsScreen} />
+      {status !== 'authenticated' ? (
+        <>
+          <Stack.Screen name="Splash" component={SplashScreen} />
+          <Stack.Screen name="AuthIntro" component={AuthIntroScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} />
+          <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} />
+          <Stack.Screen name="VerifyOTP" component={VerifyOTPScreen} />
+          <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="CreatePassword" component={CreatePasswordScreen} />
+          <Stack.Screen name="SetName" component={SetNameScreen} />
+        </>
+      ) : (
+        <>
+          <Stack.Screen name="Camera" component={CameraScreen} />
+          <Stack.Screen name="Discover" component={DiscoverScreen} />
+          <Stack.Screen name="Send" component={CameraPostScreen} />
+          <Stack.Screen name="Profile" component={ProfileScreen} />
+          <Stack.Screen name="ProfileReviews" component={ProfileReviewsScreen} />
+          <Stack.Screen name="PersonalInfo" component={PersonalInfoScreen} />
+          <Stack.Screen name="TermsOfUse" component={TermsOfUseScreen} />
+          <Stack.Screen name="HelpCenter" component={HelpCenterScreen} />
+          <Stack.Screen name="ShareApp" component={ShareAppScreen} />
+          <Stack.Screen name="ChangePassword" component={ChangePasswordScreen} />
+          <Stack.Screen name="Friends" component={FriendsScreen} />
+        </>
+      )}
     </Stack.Navigator>
   );
 }

@@ -6,6 +6,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 import { getProfileData } from '../../services/profileStore';
+import { useAuth } from '../../context/AuthContext';
 
 type IconName = React.ComponentProps<typeof Ionicons>['name'];
 type MenuAction = 'terms' | 'helpCenter' | 'shareApp' | 'changePassword';
@@ -53,6 +54,7 @@ const settingItems: MenuItem[] = [
 
 export default function ProfileScreen() {
 	const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+	const { logout } = useAuth();
 	const [bio, setBio] = useState(user.bio);
 
 	useFocusEffect(
@@ -78,11 +80,8 @@ export default function ProfileScreen() {
 	}, [navigation]);
 
 	const goSplash = useCallback(() => {
-		navigation.reset({
-			index: 0,
-			routes: [{ name: 'Splash' }],
-		});
-	}, [navigation]);
+		void logout();
+	}, [logout]);
 
 	const handleMenuPress = useCallback(
 		(action: MenuAction) => {

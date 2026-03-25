@@ -13,6 +13,8 @@ import { useTheme } from '../../hooks/useTheme';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/RootNavigator';
+import { requestRegisterOtp } from '../../services/authService';
+import { ApiError } from '../../services/httpClient';
 
 export default function RegisterScreen() {
   const theme = useTheme();
@@ -45,8 +47,16 @@ export default function RegisterScreen() {
       setError('');
       setLoading(true);
 
-      // TODO: call API gửi OTP
-      await sleep(1000);
+      try {
+        await requestRegisterOtp(email.trim());
+      } catch (e) {
+        const message = e instanceof ApiError ? e.message : 'Không thể gửi OTP';
+        setError(message);
+        setLoading(false);
+        return;
+      }
+
+      await sleep(250);
 
       setLoading(false);
       setStep('otp');
@@ -58,7 +68,7 @@ export default function RegisterScreen() {
       }
 
       setError('');
-      navigation.navigate("CreatePassword", { email });
+      navigation.navigate('CreatePassword', { email: email.trim(), otp: otp.trim() });
     }
   };
 

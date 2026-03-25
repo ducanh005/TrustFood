@@ -1,26 +1,64 @@
 import { Photo } from "../types";
+import { API_ENDPOINTS } from '../config/api';
+import { apiRequest } from './httpClient';
 
-let fakeDatabase: Photo[] = [];
+type UploadPhotoResponse = {
+  photo?: {
+    id: string;
+    imageUrl: string;
+    createdAt: number | string;
+    senderId: string;
+  };
+};
+
+type PhotoListResponse = {
+  items?: Array<{
+    id: string;
+    imageUrl: string;
+    createdAt: number | string;
+    senderId: string;
+  }>;
+};
+
+function normalizePhoto(item: {
+  id: string;
+  imageUrl: string;
+  createdAt: number | string;
+  senderId: string;
+}): Photo {
+  return {
+    id: item.id,
+    imageUrl: item.imageUrl,
+    senderId: item.senderId,
+    createdAt: typeof item.createdAt === 'number' ? item.createdAt : Date.parse(item.createdAt),
+  };
+}
 
 export const uploadPhoto = async (
   imageUri: string,
   senderId: string
 ): Promise<Photo> => {
-  // 🔥 FAKE API CALL
-  await new Promise((resolve) => setTimeout(() => resolve(undefined), 1000));
+  const formData = new FormData();
+  formData.append('senderId', senderId);
+  formData.append('file', {
+    uri: imageUri,
+    name: `photo-${Date.now()}.jpg`,
+    type: 'image/jpeg',
+  } as unknown as Blob);
 
-  const newPhoto: Photo = {
-    id: Date.now().toString(),
-    imageUrl: imageUri,
-    createdAt: Date.now(),
-    senderId,
-  };
+  const payload = await apiRequest<UploadPhotoResponse>(API_ENDPOINTS.photos, {
+    method: 'POST',
+    body: formData,
+  });
 
-  fakeDatabase.unshift(newPhoto);
+  if (!payload.photo) {
+    throw new Error('Upload response does not include photo data');
+  }
 
-  return newPhoto;
+  return normalizePhoto(payload.photo);
 };
 
 export const getPhotos = async (): Promise<Photo[]> => {
-  return fakeDatabase;
+  const payload = await apiRequest<PhotoListResponse>(API_ENDPOINTS.photos);
+  return (payload.items ?? []).map(normalizePhoto);
 };

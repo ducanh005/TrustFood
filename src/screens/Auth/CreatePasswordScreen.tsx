@@ -12,7 +12,7 @@ export default function CreatePasswordScreen() {
     useNavigation<NativeStackNavigationProp<RootStackParamList, 'CreatePassword'>>();
 
   const route = useRoute();
-  const { email } = route.params as { email: string };
+  const { email, otp } = route.params as { email: string; otp: string };
 
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -23,7 +23,7 @@ export default function CreatePasswordScreen() {
       return;
     }
 
-    navigation.navigate('SetName', { email, password });
+    navigation.navigate('SetName', { email, password, otp });
   };
 
   return (

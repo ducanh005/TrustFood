@@ -5,6 +5,8 @@ import { useTheme } from '../../hooks/useTheme';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/RootNavigator';
+import { completeRegistration } from '../../services/authService';
+import { ApiError } from '../../services/httpClient';
 
 export default function SetNameScreen() {
   const theme = useTheme();
@@ -12,10 +14,15 @@ export default function SetNameScreen() {
     useNavigation<NativeStackNavigationProp<RootStackParamList, 'SetName'>>();
 
   const route = useRoute();
-  const { email, password } = route.params as { email: string; password: string };
+  const { email, password, otp } = route.params as {
+    email: string;
+    password: string;
+    otp: string;
+  };
 
   const [name, setName] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleContinue = async () => {
     if (!name.trim()) {
@@ -23,10 +30,27 @@ export default function SetNameScreen() {
       return;
     }
 
-    // TODO: call API tạo tài khoản
-    console.log({ email, password, name });
+    setError('');
+    setLoading(true);
 
-    navigation.navigate('Login');
+    try {
+      await completeRegistration({
+        email,
+        password,
+        name: name.trim(),
+        otp,
+      });
+
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'Login' }],
+      });
+    } catch (e) {
+      const message = e instanceof ApiError ? e.message : 'Không thể tạo tài khoản';
+      setError(message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -44,10 +68,11 @@ export default function SetNameScreen() {
       {error ? <AppText style={styles.error}>{error}</AppText> : null}
 
       <TouchableOpacity
-        style={[styles.button, { backgroundColor: theme.colors.primary }]}
+        style={[styles.button, { backgroundColor: theme.colors.primary, opacity: loading ? 0.7 : 1 }]}
         onPress={handleContinue}
+        disabled={loading}
       >
-        <AppText variant="P1_Medium">Tiếp tục</AppText>
+        <AppText variant="P1_Medium">{loading ? 'Đang tạo tài khoản...' : 'Tiếp tục'}</AppText>
       </TouchableOpacity>
     </View>
   );
