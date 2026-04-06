@@ -8,6 +8,7 @@ import {
 import { AppText } from "../../components/AppText";
 import { useTheme } from "../../hooks/useTheme";
 import { useNavigation } from "@react-navigation/native";
+import { moderateScale, scaleFont, verticalScale } from '../../utils/responsive';
 
 export default function VerifyOTPScreen() {
   const theme = useTheme();
@@ -83,7 +84,7 @@ export default function VerifyOTPScreen() {
         <AppText
           style={{
             color: countdown > 0 ? "#666" : theme.colors.primary,
-            marginTop: 20,
+            marginTop: verticalScale(20),
           }}
         >
           {countdown > 0 ? `Gửi lại sau ${countdown}s` : "Gửi lại OTP"}
@@ -94,27 +95,27 @@ export default function VerifyOTPScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#000", padding: 20, justifyContent: "center" },
-  title: { color: "#fff", textAlign: "center", marginBottom: 32 },
+  container: { flex: 1, backgroundColor: "#000", padding: moderateScale(20), justifyContent: "center" },
+  title: { color: "#fff", textAlign: "center", marginBottom: verticalScale(32) },
   otpContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 20,
+    marginBottom: verticalScale(20),
   },
   otpInput: {
-    width: 48,
-    height: 56,
-    borderRadius: 12,
+    width: moderateScale(48),
+    height: verticalScale(56),
+    borderRadius: moderateScale(12),
     backgroundColor: "#1c1c1c",
     textAlign: "center",
-    fontSize: 20,
+    fontSize: scaleFont(20),
     color: "#fff",
   },
   inputError: { borderWidth: 1, borderColor: "red" },
-  error: { color: "red", marginBottom: 10, textAlign: "center" },
+  error: { color: "red", marginBottom: verticalScale(10), textAlign: "center" },
   button: {
-    height: 56,
-    borderRadius: 28,
+    height: verticalScale(56),
+    borderRadius: moderateScale(28),
     justifyContent: "center",
     alignItems: "center",
   },

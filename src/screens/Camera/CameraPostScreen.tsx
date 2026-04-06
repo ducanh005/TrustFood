@@ -9,22 +9,27 @@ import {
   ScrollView,
   PanResponder,
   Alert,
+  useWindowDimensions,
 } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import Ionicons from "@react-native-vector-icons/ionicons";
 import { openPhoneGallery } from "../../utils/galleryHelper";
 import { uploadPhoto } from "../../services/photoService";
+import { moderateScale, scaleFont, verticalScale } from '../../utils/responsive';
 
 export default function CameraPostScreen() {
   const route = useRoute<any>();
   const navigation = useNavigation<any>();
   const { imageUri } = route.params;
+  const { width: screenWidth } = useWindowDimensions();
 
   const [mode, setMode] = useState<"send" | "review">("send");
   const [rating, setRating] = useState(4);
   const [loading, setLoading] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Mọi người");
+  const frameWidth = Math.min(screenWidth - moderateScale(16), moderateScale(380));
+  const frameHeight = frameWidth * 0.92;
 
   const panResponder = useRef(
     PanResponder.create({
@@ -92,7 +97,7 @@ return (
       {/* SEND MODE */}
       {mode === "send" && (
         <View style={styles.frameContainer}>
-          <View style={styles.frame}>
+          <View style={[styles.frame, { width: frameWidth, height: frameHeight, borderRadius: moderateScale(30) }]}>
             <Image source={{ uri: imageUri }} style={styles.previewImage} />
             <View style={styles.flashBadge}>
               <Text style={styles.badgeText}>⚡</Text>
@@ -119,7 +124,7 @@ return (
               <TouchableOpacity key={i} onPress={() => setRating(i)}>
                 <Ionicons
                   name={i <= rating ? "star" : "star-outline"}
-                  size={32}
+                  size={moderateScale(32)}
                   color="#FFD400"
                 />
               </TouchableOpacity>
@@ -128,7 +133,7 @@ return (
 
           <Text style={styles.label}>Vị trí</Text>
           <View style={styles.input}>
-            <Ionicons name="location" size={18} color="#FFD400" />
+            <Ionicons name="location" size={moderateScale(18)} color="#FFD400" />
             <TextInput
               placeholder="Nhập địa chỉ"
               placeholderTextColor="#999"
@@ -175,46 +180,53 @@ return (
         </ScrollView>
       )}
 
-      {/* MODE SWITCH */}
-      <View style={styles.modeContainer} {...panResponder.panHandlers}>
-        <TouchableOpacity
-          style={styles.modeDots}
-          onPress={() => setMode(mode === "send" ? "review" : "send")}
-        >
-          <View style={mode === "send" ? styles.dotActive : styles.dot} />
-          <View style={mode === "review" ? styles.dotActive : styles.dot} />
-        </TouchableOpacity>
-        <Text style={styles.modeText}>
-          {mode === "send" ? "Gửi ảnh" : "Đánh giá"}
-        </Text>
-      </View>
+      <View style={styles.bottomPanel}>
+        {/* MODE SWITCH */}
+        <View style={styles.modeContainer} {...panResponder.panHandlers}>
+          <TouchableOpacity
+            style={styles.modeDots}
+            onPress={() => setMode(mode === "send" ? "review" : "send")}
+          >
+            <View style={mode === "send" ? styles.dotActive : styles.dot} />
+            <View style={mode === "review" ? styles.dotActive : styles.dot} />
+          </TouchableOpacity>
+          <Text style={styles.modeText}>
+            {mode === "send" ? "Gửi ảnh" : "Đánh giá"}
+          </Text>
+        </View>
 
-      {/* BOTTOM BAR */}
-      <View style={styles.bottomBar}>
-        <TouchableOpacity
-          style={styles.smallBtn}
-          onPress={() =>
-            openPhoneGallery((uri) => {
-              navigation.replace("CameraPost", { imageUri: uri });
-            })
-          }
-        >
-          <Ionicons name="images" size={24} color="#fff" />
-        </TouchableOpacity>
+        {/* BOTTOM BAR */}
+        <View style={styles.bottomBar}>
+          <TouchableOpacity
+            style={styles.smallBtn}
+            onPress={() =>
+              openPhoneGallery((uri) => {
+                navigation.replace("CameraPost", { imageUri: uri });
+              })
+            }
+          >
+            <Ionicons name="images" size={moderateScale(24)} color="#fff" />
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.captureWrapper}
-          onPress={handleSend}
-          disabled={loading}
-        >
-          <View style={styles.captureBtn}>
-            <Ionicons name="send" size={32} color="#000" />
-          </View>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.captureWrapper}
+            onPress={handleSend}
+            disabled={loading}
+          >
+            <View style={styles.captureBtn}>
+              <Ionicons name="send" size={moderateScale(32)} color="#000" />
+            </View>
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.smallBtn}>
-          <Ionicons name="camera-reverse" size={24} color="#fff" />
-        </TouchableOpacity>
+          <TouchableOpacity style={styles.smallBtn}>
+            <Ionicons name="camera-reverse" size={moderateScale(24)} color="#fff" />
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.explore}>
+          <Text style={styles.exploreText}>Khám phá</Text>
+          <Ionicons name="chevron-down" size={moderateScale(14)} color="#8A8A8A" />
+        </View>
       </View>
     </View>
   );
@@ -233,28 +245,28 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 20,
+    paddingHorizontal: moderateScale(20),
     zIndex: 20,
     backgroundColor: "#000",
-    paddingTop: 50,
-    paddingBottom: 10,
+    paddingTop: verticalScale(50),
+    paddingBottom: verticalScale(10),
   },
 
   avatar: {
-    bottom: 6,
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    bottom: verticalScale(6),
+    width: moderateScale(40),
+    height: moderateScale(40),
+    borderRadius: moderateScale(20),
     backgroundColor: "#999",
     position: "absolute",
-    left: 20,
+    left: moderateScale(20),
   },
 
   dropdown: {
     backgroundColor: "#333",
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20,
+    paddingHorizontal: moderateScale(12),
+    paddingVertical: verticalScale(6),
+    borderRadius: moderateScale(20),
   },
 
   dropdownText: {
@@ -263,17 +275,17 @@ const styles = StyleSheet.create({
 
   dropdownMenu: {
     position: "absolute",
-    top: 85,
+    top: verticalScale(85),
     backgroundColor: "#222",
-    borderRadius: 12,
+    borderRadius: moderateScale(12),
     overflow: "hidden",
-    minWidth: 150,
+    minWidth: moderateScale(150),
     zIndex: 30,
   },
 
   dropdownItem: {
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+    paddingVertical: verticalScale(12),
+    paddingHorizontal: moderateScale(16),
     borderBottomWidth: 1,
     borderBottomColor: "#333",
   },
@@ -284,15 +296,12 @@ const styles = StyleSheet.create({
 
   frameContainer: {
     position: "absolute",
-    top: 120,
+    top: verticalScale(150),
     width: "100%",
     alignItems: "center",
   },
 
   frame: {
-    width: 360,
-    height: 360,
-    borderRadius: 30,
     overflow: "hidden",
   },
 
@@ -303,14 +312,14 @@ const styles = StyleSheet.create({
 
   flashBadge: {
     position: "absolute",
-    top: 10,
-    left: 10,
+    top: verticalScale(10),
+    left: moderateScale(10),
   },
 
   zoomBadge: {
     position: "absolute",
-    top: 10,
-    right: 10,
+    top: verticalScale(10),
+    right: moderateScale(10),
   },
 
   badgeText: {
@@ -318,42 +327,42 @@ const styles = StyleSheet.create({
   },
 
   scrollContent: {
-    paddingTop: 140,
-    paddingHorizontal: 20,
-    paddingBottom: 280,
+    paddingTop: verticalScale(140),
+    paddingHorizontal: moderateScale(20),
+    paddingBottom: verticalScale(280),
   },
 
   imageWrapper: {
     alignItems: "center",
-    marginBottom: 15,
+    marginBottom: verticalScale(15),
   },
 
   image: {
-    width: 90,
-    height: 90,
-    borderRadius: 16,
+    width: moderateScale(90),
+    height: moderateScale(90),
+    borderRadius: moderateScale(16),
   },
 
   starRow: {
     flexDirection: "row",
     justifyContent: "center",
-    marginBottom: 20,
+    marginBottom: verticalScale(20),
   },
 
   label: {
     color: "#fff",
-    marginBottom: 6,
+    marginBottom: verticalScale(6),
   },
 
   input: {
     backgroundColor: "#2a2a2a",
-    borderRadius: 12,
+    borderRadius: moderateScale(12),
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 12,
-    marginBottom: 16,
-    height: 46,
-    gap: 8,
+    paddingHorizontal: moderateScale(12),
+    marginBottom: verticalScale(16),
+    height: verticalScale(46),
+    gap: moderateScale(8),
   },
 
   textInput: {
@@ -363,65 +372,65 @@ const styles = StyleSheet.create({
 
   textArea: {
     backgroundColor: "#2a2a2a",
-    borderRadius: 12,
-    padding: 12,
-    height: 120,
+    borderRadius: moderateScale(12),
+    padding: moderateScale(12),
+    height: verticalScale(120),
   },
 
   modeContainer: {
-    position: "absolute",
-    bottom: 170,
-    height: 60,
     width: "100%",
     alignItems: "center",
-    paddingVertical: 6,
-    backgroundColor: "#000",
-    zIndex: 15,
+    marginBottom: verticalScale(8),
   },
 
   modeDots: {
     flexDirection: "row",
-    marginBottom: 4,
+    marginBottom: verticalScale(2),
   },
 
   dotActive: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    width: moderateScale(8),
+    height: moderateScale(8),
+    borderRadius: moderateScale(4),
     backgroundColor: "#FFD400",
-    marginHorizontal: 4,
+    marginHorizontal: moderateScale(4),
   },
 
   dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    width: moderateScale(8),
+    height: moderateScale(8),
+    borderRadius: moderateScale(4),
     backgroundColor: "#555",
-    marginHorizontal: 4,
+    marginHorizontal: moderateScale(4),
   },
 
   modeText: {
     color: "#fff",
     marginTop: 0,
-    fontSize: 12,
+    fontSize: scaleFont(12),
+  },
+
+  bottomPanel: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    backgroundColor: "#000",
+    paddingTop: verticalScale(4),
+    paddingBottom: verticalScale(18),
+    zIndex: 12,
   },
 
   bottomBar: {
-    position: "absolute",
-    paddingBottom: 80,
-    bottom: 0,
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    backgroundColor: "#000",
-    paddingVertical: 8,
-    zIndex: 10,
+    paddingVertical: verticalScale(2),
   },
 
   smallBtn: {
-    width: 40,
-    height: 40,
+    width: moderateScale(40),
+    height: moderateScale(40),
     alignItems: "center",
     justifyContent: "center",
   },
@@ -429,16 +438,27 @@ const styles = StyleSheet.create({
   captureWrapper: {
     borderWidth: 3,
     borderColor: "#FFD400",
-    borderRadius: 50,
-    padding: 5,
+    borderRadius: moderateScale(50),
+    padding: moderateScale(5),
   },
 
   captureBtn: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
+    width: moderateScale(70),
+    height: moderateScale(70),
+    borderRadius: moderateScale(35),
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+
+  explore: {
+    alignSelf: "center",
+    alignItems: "center",
+    marginTop: verticalScale(6),
+  },
+
+  exploreText: {
+    color: "#FFD400",
+    fontSize: scaleFont(13),
   },
 });

@@ -4,6 +4,7 @@ import Ionicons from "@react-native-vector-icons/ionicons";
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/RootNavigator';
+import { moderateScale } from '../utils/responsive';
 
 type BottomBarItem = 'star' | 'location' | 'notifications' | 'people';
 
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    paddingVertical: 10,
+    paddingVertical: moderateScale(10),
     backgroundColor: '#181818',
     borderTopWidth: 1,
     borderTopColor: '#222',
@@ -68,13 +69,13 @@ const styles = StyleSheet.create({
     captureWrapper: {
     borderWidth: 3,
     borderColor: "#FFD400",
-    borderRadius: 50,
-    padding: 5,
+    borderRadius: moderateScale(50),
+    padding: moderateScale(5),
   },
   captureBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 40,
+    width: moderateScale(40),
+    height: moderateScale(40),
+    borderRadius: moderateScale(40),
     backgroundColor: "#fff",
   },
 });

@@ -4,6 +4,7 @@ import Ionicons from '@react-native-vector-icons/ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/RootNavigator';
+import { moderateScale, scaleFont, verticalScale } from '../../utils/responsive';
 
 export default function ChangePasswordScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -52,7 +53,7 @@ export default function ChangePasswordScreen() {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.backBtn} onPress={handleBack} activeOpacity={0.7}>
-          <Ionicons name="arrow-back-outline" size={28} color="#fff" />
+          <Ionicons name="arrow-back-outline" size={moderateScale(28)} color="#fff" />
         </TouchableOpacity>
         <Text style={styles.title}>Đổi mật khẩu</Text>
       </View>
@@ -106,52 +107,52 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#0f0b09',
-    paddingHorizontal: 18,
+    paddingHorizontal: moderateScale(18),
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingTop: 46,
-    marginBottom: 20,
+    paddingTop: verticalScale(46),
+    marginBottom: verticalScale(20),
   },
   backBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: moderateScale(36),
+    height: moderateScale(36),
+    borderRadius: moderateScale(18),
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 8,
+    marginRight: moderateScale(8),
   },
   title: {
     color: '#fff',
-    fontSize: 30,
+    fontSize: scaleFont(30),
     fontWeight: '700',
   },
   card: {
     backgroundColor: '#1b1714',
-    borderRadius: 16,
-    paddingVertical: 18,
-    paddingHorizontal: 14,
+    borderRadius: moderateScale(16),
+    paddingVertical: verticalScale(18),
+    paddingHorizontal: moderateScale(14),
   },
   text: {
     color: '#f0f0f0',
-    fontSize: 16,
-    lineHeight: 24,
-    marginBottom: 12,
+    fontSize: scaleFont(16),
+    lineHeight: verticalScale(24),
+    marginBottom: verticalScale(12),
   },
   input: {
     backgroundColor: '#2b2520',
-    borderRadius: 12,
+    borderRadius: moderateScale(12),
     color: '#fff',
-    paddingHorizontal: 12,
-    height: 46,
-    marginBottom: 10,
+    paddingHorizontal: moderateScale(12),
+    height: verticalScale(46),
+    marginBottom: verticalScale(10),
   },
   submitBtn: {
-    marginTop: 8,
+    marginTop: verticalScale(8),
     backgroundColor: '#ffd31a',
-    borderRadius: 12,
-    height: 46,
+    borderRadius: moderateScale(12),
+    height: verticalScale(46),
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -161,10 +162,10 @@ const styles = StyleSheet.create({
   },
   error: {
     color: '#ff7d7d',
-    marginBottom: 8,
+    marginBottom: verticalScale(8),
   },
   success: {
     color: '#9de09a',
-    marginBottom: 8,
+    marginBottom: verticalScale(8),
   },
 });

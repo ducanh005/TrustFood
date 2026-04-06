@@ -5,6 +5,7 @@ import { useTheme } from '../../hooks/useTheme';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/RootNavigator';
+import { moderateScale, verticalScale } from '../../utils/responsive';
 
 export default function CreatePasswordScreen() {
   const theme = useTheme();
@@ -57,24 +58,24 @@ export default function CreatePasswordScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#000', padding: 20, justifyContent: 'center' },
-  title: { color: '#fff', textAlign: 'center', marginBottom: 32 },
-  label: { color: '#fff', marginBottom: 8 },
+  container: { flex: 1, backgroundColor: '#000', padding: moderateScale(20), justifyContent: 'center' },
+  title: { color: '#fff', textAlign: 'center', marginBottom: verticalScale(32) },
+  label: { color: '#fff', marginBottom: verticalScale(8) },
   input: {
-    height: 50,
+    height: verticalScale(50),
     backgroundColor: '#1c1c1c',
-    borderRadius: 12,
-    paddingHorizontal: 16,
+    borderRadius: moderateScale(12),
+    paddingHorizontal: moderateScale(16),
     color: '#fff',
   },
   inputError: { borderWidth: 1, borderColor: 'red' },
-  hint: { color: '#aaa', marginTop: 6 },
-  error: { color: 'red', marginTop: 6 },
+  hint: { color: '#aaa', marginTop: verticalScale(6) },
+  error: { color: 'red', marginTop: verticalScale(6) },
   button: {
-    height: 56,
-    borderRadius: 28,
+    height: verticalScale(56),
+    borderRadius: moderateScale(28),
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 24,
+    marginTop: verticalScale(24),
   },
 });

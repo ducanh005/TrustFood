@@ -14,6 +14,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../navigation/RootNavigator";
 import { requestForgotPasswordOtp } from '../../services/authService';
 import { ApiError } from '../../services/httpClient';
+import { moderateScale, scaleFont, verticalScale } from '../../utils/responsive';
 
 export default function ForgotPasswordScreen() {
   const theme = useTheme();
@@ -149,30 +150,30 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#000",
-    padding: 20,
+    padding: moderateScale(20),
     justifyContent: "center",
   },
   title: {
     color: "#fff",
     textAlign: "center",
-    marginBottom: 32,
+    marginBottom: verticalScale(32),
   },
   label: {
     color: "#fff",
-    marginBottom: 8,
+    marginBottom: verticalScale(8),
   },
   subText: {
     color: "#aaa",
-    marginBottom: 8,
-    fontSize: 13,
+    marginBottom: verticalScale(8),
+    fontSize: scaleFont(13),
   },
   input: {
     backgroundColor: "#1c1c1c",
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    height: 50,
+    borderRadius: moderateScale(12),
+    paddingHorizontal: moderateScale(16),
+    height: verticalScale(50),
     color: "#fff",
-    marginBottom: 12,
+    marginBottom: verticalScale(12),
   },
   inputError: {
     borderWidth: 1,
@@ -180,17 +181,17 @@ const styles = StyleSheet.create({
   },
   error: {
     color: "red",
-    marginTop: 4,
+    marginTop: verticalScale(4),
   },
   link: {
     color: "#FFC726",
-    marginBottom: 12,
+    marginBottom: verticalScale(12),
   },
   button: {
-    height: 56,
-    borderRadius: 28,
+    height: verticalScale(56),
+    borderRadius: moderateScale(28),
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 24,
+    marginTop: verticalScale(24),
   },
 });

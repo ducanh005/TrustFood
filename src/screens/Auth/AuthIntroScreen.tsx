@@ -10,6 +10,7 @@ import { useTheme } from '../../hooks/useTheme';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/RootNavigator';
+import { moderateScale, verticalScale } from '../../utils/responsive';
 
 export default function AuthIntroScreen() {
   const theme = useTheme();
@@ -70,34 +71,34 @@ export default function AuthIntroScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 24,
+    padding: moderateScale(24),
     justifyContent: 'center',
   },
   image: {
     width: '100%',
-    height: 300,
-    marginBottom: 24,
+    height: verticalScale(300),
+    marginBottom: verticalScale(24),
   },
   title: {
     textAlign: 'center',
-    marginBottom: 12,
+    marginBottom: verticalScale(12),
     color: '#fff',
   },
   desc: {
     textAlign: 'center',
-    marginBottom: 32,
+    marginBottom: verticalScale(32),
     color: '#aaa',
   },
   primaryBtn: {
-    height: 56,
-    borderRadius: 28,
+    height: verticalScale(56),
+    borderRadius: moderateScale(28),
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: verticalScale(16),
   },
   outlineBtn: {
-    height: 56,
-    borderRadius: 28,
+    height: verticalScale(56),
+    borderRadius: moderateScale(28),
     borderWidth: 1,
     borderColor: '#fff',
     justifyContent: 'center',
@@ -105,8 +106,8 @@ const styles = StyleSheet.create({
   },
   addText: {
     textAlign: 'center',
-    marginTop: 20,
-    marginBottom: 20,
+    marginTop: verticalScale(20),
+    marginBottom: verticalScale(20),
     color: '#c0c0c0',
   },
   btnContent: {
@@ -115,9 +116,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   icon: {
-    width: 20,
-    height: 20,
-    marginRight: 8,
+    width: moderateScale(20),
+    height: moderateScale(20),
+    marginRight: moderateScale(8),
   },
    btnText: {
     color: '#fff',

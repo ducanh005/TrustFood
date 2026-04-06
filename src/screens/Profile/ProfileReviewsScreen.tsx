@@ -13,6 +13,7 @@ import Ionicons from '@react-native-vector-icons/ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/RootNavigator';
+import { moderateScale, scaleFont, verticalScale } from '../../utils/responsive';
 
 type ReviewImage = {
   id: string;
@@ -70,7 +71,7 @@ export default function ProfileReviewsScreen() {
           <View>
             <View style={styles.header}>
                 <TouchableOpacity style={styles.backBtn} onPress={handleBack} activeOpacity={0.7}>
-                    <Ionicons name="arrow-back-outline" size={28} color="#fff" />
+                  <Ionicons name="arrow-back-outline" size={moderateScale(28)} color="#fff" />
                 </TouchableOpacity>
             </View>
 
@@ -103,64 +104,64 @@ const styles = StyleSheet.create({
     backgroundColor: '#0e0907',
   },
   content: {
-    paddingHorizontal: 10,
-    paddingBottom: 24,
+    paddingHorizontal: moderateScale(10),
+    paddingBottom: verticalScale(24),
   },
   header: {
    flexDirection: 'row',
 		alignItems: 'center',
-		paddingTop: 36,
-		paddingBottom: 12,
-		paddingHorizontal: 16,
+		paddingTop: verticalScale(36),
+		paddingBottom: verticalScale(12),
+		paddingHorizontal: moderateScale(16),
 		backgroundColor: 'transparent',
   },
   backBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: moderateScale(36),
+    height: moderateScale(36),
+    borderRadius: moderateScale(18),
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 10,
+    marginRight: moderateScale(10),
   },
   profileBox: {
     alignItems: 'center',
-    paddingTop: 8,
-    paddingBottom: 12,
+    paddingTop: verticalScale(8),
+    paddingBottom: verticalScale(12),
   },
   avatar: {
-    width: 78,
-    height: 78,
-    borderRadius: 39,
-    marginBottom: 12,
+    width: moderateScale(78),
+    height: moderateScale(78),
+    borderRadius: moderateScale(39),
+    marginBottom: verticalScale(12),
   },
   name: {
     color: '#f8f1ed',
-    fontSize: 31,
+    fontSize: scaleFont(31),
     fontWeight: '700',
   },
   username: {
     color: '#9f938d',
-    fontSize: 19,
-    marginTop: 2,
+    fontSize: scaleFont(19),
+    marginTop: verticalScale(2),
   },
   stats: {
     color: '#d7cbc5',
-    fontSize: 15,
-    marginTop: 10,
+    fontSize: scaleFont(15),
+    marginTop: verticalScale(10),
     textAlign: 'center',
   },
   separator: {
-    height: 1,
+    height: verticalScale(1),
     backgroundColor: '#231916',
-    marginBottom: 14,
+    marginBottom: verticalScale(14),
   },
   gridRow: {
     justifyContent: 'space-between',
-    marginBottom: 8,
+    marginBottom: verticalScale(8),
   },
   card: {
     width: '32.2%',
-    borderRadius: 8,
+    borderRadius: moderateScale(8),
     overflow: 'hidden',
     backgroundColor: '#1e1512',
   },

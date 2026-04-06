@@ -4,6 +4,7 @@ import Ionicons from "@react-native-vector-icons/ionicons";
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/RootNavigator';
+import { moderateScale, scaleFont } from '../utils/responsive';
 
 
 export const Navbar = () => {
@@ -31,19 +32,34 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingTop: 36,
-    paddingBottom: 10,
+    paddingHorizontal: moderateScale(16),
+    paddingTop: moderateScale(36),
+    paddingBottom: moderateScale(10),
     backgroundColor: '#181818',
     borderBottomWidth: 1,
     borderBottomColor: '#222',
   },
-  left: { width: 40, height: 40, justifyContent: 'center', alignItems: 'center' },
+  left: {
+    width: moderateScale(40),
+    height: moderateScale(40),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   avatarPlaceholder: {
-    width: 32, height: 32, borderRadius: 16, backgroundColor: '#888',
+    width: moderateScale(32),
+    height: moderateScale(32),
+    borderRadius: moderateScale(16),
+    backgroundColor: '#888',
   },
   title: {
-    color: '#fff', fontSize: 20, fontWeight: 'bold',
+    color: '#fff',
+    fontSize: scaleFont(20),
+    fontWeight: 'bold',
   },
-  right: { width: 40, height: 40, justifyContent: 'center', alignItems: 'center' },
+  right: {
+    width: moderateScale(40),
+    height: moderateScale(40),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });

@@ -6,6 +6,7 @@ import PostItem, { Post } from '../../components/PostItem';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/RootNavigator';
+import { moderateScale, verticalScale } from '../../utils/responsive';
 
 
 // NOTE: This screen uses fake data for local development/demo.
@@ -177,6 +178,6 @@ export default function DiscoverScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#0b0b0b' },
-  loadingMore: { padding: 16 },
-  listContent: { paddingBottom: 70 },
+  loadingMore: { padding: moderateScale(16) },
+  listContent: { paddingBottom: verticalScale(70) },
 });

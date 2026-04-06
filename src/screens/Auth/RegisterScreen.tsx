@@ -15,6 +15,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 import { requestRegisterOtp } from '../../services/authService';
 import { ApiError } from '../../services/httpClient';
+import { moderateScale, verticalScale } from '../../utils/responsive';
 
 export default function RegisterScreen() {
   const theme = useTheme();
@@ -178,35 +179,35 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#000',
-    padding: 16,
+    padding: moderateScale(16),
     justifyContent: 'center',
   },
   content: {
     alignItems: 'center',
   },
   logo: {
-    width: 72,
-    height: 72,
-    marginBottom: 24,
-    borderRadius: 12,
+    width: moderateScale(72),
+    height: moderateScale(72),
+    marginBottom: verticalScale(24),
+    borderRadius: moderateScale(12),
   },
   title: {
     textAlign: 'center',
-    marginBottom: 32,
+    marginBottom: verticalScale(32),
     color: '#fff',
   },
   label: {
     alignSelf: 'flex-start',
     color: '#fff',
-    marginBottom: 8,
+    marginBottom: verticalScale(8),
   },
   input: {
     width: '100%',
-    height: 50,
+    height: verticalScale(50),
     backgroundColor: '#1c1c1c',
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    marginBottom: 12,
+    borderRadius: moderateScale(12),
+    paddingHorizontal: moderateScale(16),
+    marginBottom: verticalScale(12),
     color: '#fff',
   },
   inputError: {
@@ -216,25 +217,25 @@ const styles = StyleSheet.create({
   error: {
     alignSelf: 'flex-start',
     color: 'red',
-    marginBottom: 12,
+    marginBottom: verticalScale(12),
   },
   primaryBtn: {
-    height: 56,
-    borderRadius: 28,
+    height: verticalScale(56),
+    borderRadius: moderateScale(28),
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    marginTop: 12,
+    marginTop: verticalScale(12),
   },
   addText: {
     textAlign: 'center',
-    marginTop: 24,
+    marginTop: verticalScale(24),
     color: '#c0c0c0',
   },
   outlineBtn: {
-    marginTop: 16,
-    height: 56,
-    borderRadius: 28,
+    marginTop: verticalScale(16),
+    height: verticalScale(56),
+    borderRadius: moderateScale(28),
     borderWidth: 1,
     borderColor: '#fff',
     justifyContent: 'center',
@@ -246,16 +247,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   icon: {
-    width: 20,
-    height: 20,
-    marginRight: 8,
+    width: moderateScale(20),
+    height: moderateScale(20),
+    marginRight: moderateScale(8),
   },
   btnText: {
     color: '#fff',
   },
   rowCenter: {
     flexDirection: 'row',
-    marginTop: 20,
+    marginTop: verticalScale(20),
     alignItems: 'center',
   },
   link: {
@@ -265,6 +266,6 @@ const styles = StyleSheet.create({
   subText: {
     alignSelf: 'flex-start',
     color: '#aaa',
-    marginBottom: 8,
+    marginBottom: verticalScale(8),
   },
 });

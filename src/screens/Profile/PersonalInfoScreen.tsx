@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 import { getProfileData, updateProfileData } from '../../services/profileStore';
+import { moderateScale, scaleFont, verticalScale } from '../../utils/responsive';
 
 export default function PersonalInfoScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -56,7 +57,7 @@ export default function PersonalInfoScreen() {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity style={styles.backBtn} onPress={handleBack} activeOpacity={0.7}>
-          <Ionicons name="arrow-back-outline" size={28} color="#fff" />
+          <Ionicons name="arrow-back-outline" size={moderateScale(28)} color="#fff" />
         </TouchableOpacity>
         
       </View>
@@ -65,7 +66,7 @@ export default function PersonalInfoScreen() {
         <View style={styles.avatarWrap}>
           <Image source={{ uri: profile.avatar }} style={styles.avatar} />
           <View style={styles.badge}>
-            <Ionicons name="camera" size={14} color="#fff" />
+            <Ionicons name="camera" size={moderateScale(14)} color="#fff" />
           </View>
         </View>
         <Text style={styles.username}>{profile.username}</Text>
@@ -130,44 +131,44 @@ const styles = StyleSheet.create({
   header: {
    flexDirection: 'row',
 		alignItems: 'center',
-		paddingTop: 36,
-		paddingBottom: 12,
-		paddingHorizontal: 16,
+		paddingTop: verticalScale(36),
+		paddingBottom: verticalScale(12),
+		paddingHorizontal: moderateScale(16),
 		backgroundColor: 'transparent',
   },
   backBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: moderateScale(36),
+    height: moderateScale(36),
+    borderRadius: moderateScale(18),
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 10,
+    marginRight: moderateScale(10),
   },
   headerTitle: {
     color: '#fff',
-    fontSize: 24,
+    fontSize: scaleFont(24),
     fontWeight: '700',
   },
   profileWrap: {
     alignItems: 'center',
-    marginTop: 26,
-    marginBottom: 14,
+    marginTop: verticalScale(26),
+    marginBottom: verticalScale(14),
   },
   avatarWrap: {
     position: 'relative',
   },
   avatar: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: moderateScale(100),
+    height: moderateScale(100),
+    borderRadius: moderateScale(50),
   },
   badge: {
     position: 'absolute',
     right: -2,
-    bottom: 4,
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    bottom: verticalScale(4),
+    width: moderateScale(32),
+    height: moderateScale(32),
+    borderRadius: moderateScale(16),
     backgroundColor: '#FFC400',
     alignItems: 'center',
     justifyContent: 'center',
@@ -176,68 +177,68 @@ const styles = StyleSheet.create({
   },
   username: {
     color: '#aaa',
-    fontSize: 18,
-    marginTop: 10,
+    fontSize: scaleFont(18),
+    marginTop: verticalScale(10),
   },
   sectionLabel: {
-    paddingLeft: 16,
-    paddingRight: 16,
+    paddingLeft: moderateScale(16),
+    paddingRight: moderateScale(16),
     color: '#6f6f6f',
-    fontSize: 15,
-    marginTop: 8,
-    marginBottom: 18,
+    fontSize: scaleFont(15),
+    marginTop: verticalScale(8),
+    marginBottom: verticalScale(18),
     fontWeight: '600',
   },
   fieldWrap: {
-    marginBottom: 20,
-    paddingLeft: 16,
-    paddingRight: 16,
+    marginBottom: verticalScale(20),
+    paddingLeft: moderateScale(16),
+    paddingRight: moderateScale(16),
   },
   fieldLabel: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: scaleFont(16),
     fontWeight: '700',
-    marginBottom: 8,
+    marginBottom: verticalScale(8),
   },
   inputEdit: {
     backgroundColor: '#5a5a5a',
-    borderRadius: 28,
+    borderRadius: moderateScale(28),
     minHeight: 54,
-    paddingHorizontal: 18,
+    paddingHorizontal: moderateScale(18),
     justifyContent: 'center',
     color: '#f2f2f2',
-    fontSize: 16,
+    fontSize: scaleFont(16),
   },
   bioInput: {
     backgroundColor: '#5a5a5a',
-    borderRadius: 18,
+    borderRadius: moderateScale(18),
     minHeight: 94,
-    paddingHorizontal: 18,
-    paddingVertical: 14,
+    paddingHorizontal: moderateScale(18),
+    paddingVertical: verticalScale(14),
     color: '#f2f2f2',
-    fontSize: 16,
-    lineHeight: 22,
+    fontSize: scaleFont(16),
+    lineHeight: verticalScale(22),
   },
   deleteBtn: {
-    paddingLeft: 16,
-    paddingRight: 16,
+    paddingLeft: moderateScale(16),
+    paddingRight: moderateScale(16),
     marginTop: 'auto',
-    marginBottom: 30,
+    marginBottom: verticalScale(30),
     borderWidth: 1.5,
     borderColor: '#FF3030',
-    borderRadius: 28,
-    paddingVertical: 14,
+    borderRadius: moderateScale(28),
+    paddingVertical: verticalScale(14),
     alignItems: 'center',
   },
   errorText: {
     color: '#ff7b7b',
-    marginTop: -8,
-    marginBottom: 8,
-    paddingHorizontal: 16,
+    marginTop: -verticalScale(8),
+    marginBottom: verticalScale(8),
+    paddingHorizontal: moderateScale(16),
   },
   deleteText: {
     color: '#FF3030',
-    fontSize: 16,
+    fontSize: scaleFont(16),
     fontWeight: '700',
     letterSpacing: 0.5,
   },

@@ -12,6 +12,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 import { resetPassword } from '../../services/authService';
 import { ApiError } from '../../services/httpClient';
+import { moderateScale, verticalScale } from '../../utils/responsive';
 
 export default function ResetPasswordScreen() {
   const theme = useTheme();
@@ -99,20 +100,20 @@ export default function ResetPasswordScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#000", padding: 20, justifyContent: "center" },
-  title: { color: "#fff", textAlign: "center", marginBottom: 32 },
+  container: { flex: 1, backgroundColor: "#000", padding: moderateScale(20), justifyContent: "center" },
+  title: { color: "#fff", textAlign: "center", marginBottom: verticalScale(32) },
   input: {
     backgroundColor: "#1c1c1c",
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    height: 50,
-    marginBottom: 16,
+    borderRadius: moderateScale(12),
+    paddingHorizontal: moderateScale(16),
+    height: verticalScale(50),
+    marginBottom: verticalScale(16),
     color: "#fff",
   },
-  error: { color: "red", marginBottom: 10 },
+  error: { color: "red", marginBottom: verticalScale(10) },
   button: {
-    height: 56,
-    borderRadius: 28,
+    height: verticalScale(56),
+    borderRadius: moderateScale(28),
     justifyContent: "center",
     alignItems: "center",
   },

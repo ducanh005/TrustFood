@@ -7,6 +7,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../navigation/RootNavigator';
 import { getProfileData } from '../../services/profileStore';
 import { useAuth } from '../../context/AuthContext';
+import { moderateScale, scaleFont, verticalScale } from '../../utils/responsive';
 
 type IconName = React.ComponentProps<typeof Ionicons>['name'];
 type MenuAction = 'terms' | 'helpCenter' | 'shareApp' | 'changePassword';
@@ -115,7 +116,7 @@ export default function ProfileScreen() {
 				{/* Header */}
 				<View style={styles.header}>
 					<TouchableOpacity style={styles.backBtn} activeOpacity={0.7} onPress={handleBack}>
-						<Ionicons name="arrow-back-outline" size={28} color="#fff" />
+						<Ionicons name="arrow-back-outline" size={moderateScale(28)} color="#fff" />
 					</TouchableOpacity>
 					<Text style={styles.headerTitle}>Cá nhân</Text>
 				</View>
@@ -134,7 +135,7 @@ export default function ProfileScreen() {
 						activeOpacity={0.8}
 						onPress={openPersonalInfo}
 					>
-						<Ionicons name="pencil-outline" size={18} color="#181210" />
+						<Ionicons name="pencil-outline" size={moderateScale(18)} color="#181210" />
 					</TouchableOpacity>
 				</View>
 				<Text style={styles.bioText} numberOfLines={2} ellipsizeMode="tail">
@@ -152,13 +153,13 @@ export default function ProfileScreen() {
 							onPress={() => handleMenuPress(item.action)}
 						>
 							<View style={styles.iconBox}>
-								<Ionicons name={item.icon} size={24} color="#FFD600" />
+								<Ionicons name={item.icon} size={moderateScale(24)} color="#FFD600" />
 							</View>
 							<View style={styles.menuTextWrap}>
 								<Text style={styles.menuTitle}>{item.title}</Text>
 								<Text style={styles.menuDesc}>{item.desc}</Text>
 							</View>
-							<Ionicons name="chevron-forward" size={22} color="#888" />
+							<Ionicons name="chevron-forward" size={moderateScale(22)} color="#888" />
 						</TouchableOpacity>
 					))}
 				</View>
@@ -184,29 +185,29 @@ const styles = StyleSheet.create({
 	header: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		paddingTop: 36,
-		paddingBottom: 12,
-		paddingHorizontal: 16,
+		paddingTop: verticalScale(36),
+		paddingBottom: verticalScale(12),
+		paddingHorizontal: moderateScale(16),
 		backgroundColor: 'transparent',
 	},
 	backBtn: {
-		width: 36,
-		height: 36,
-		borderRadius: 18,
+		width: moderateScale(36),
+		height: moderateScale(36),
+		borderRadius: moderateScale(18),
 		justifyContent: 'center',
 		alignItems: 'center',
-		marginRight: 8,
+		marginRight: moderateScale(8),
 	},
 	headerTitle: {
 		color: '#fff',
-		fontSize: 22,
+		fontSize: scaleFont(22),
 		fontWeight: 'bold',
 	},
 	userInfo: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		paddingHorizontal: 16,
-		paddingVertical: 18,
+		paddingHorizontal: moderateScale(16),
+		paddingVertical: verticalScale(18),
 	},
 	userProfileArea: {
 		flex: 1,
@@ -214,110 +215,110 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 	},
 	avatar: {
-		width: 60,
-		height: 60,
-		borderRadius: 30,
+		width: moderateScale(60),
+		height: moderateScale(60),
+		borderRadius: moderateScale(30),
 		backgroundColor: '#888',
 	},
 	editBioBtn: {
-		width: 34,
-		height: 34,
-		borderRadius: 17,
+		width: moderateScale(34),
+		height: moderateScale(34),
+		borderRadius: moderateScale(17),
 		backgroundColor: '#FFD600',
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
 	name: {
 		color: '#fff',
-		fontSize: 18,
+		fontSize: scaleFont(18),
 		fontWeight: 'bold',
 	},
 	username: {
 		color: '#aaa',
-		fontSize: 15,
-		marginTop: 2,
+		fontSize: scaleFont(15),
+		marginTop: verticalScale(2),
 	},
 	bioText: {
 		color: '#8f8f8f',
-		fontSize: 14,
-		lineHeight: 20,
-		paddingHorizontal: 16,
-		marginTop: -6,
-		marginBottom: 8,
+		fontSize: scaleFont(14),
+		lineHeight: verticalScale(20),
+		paddingHorizontal: moderateScale(16),
+		marginTop: -verticalScale(6),
+		marginBottom: verticalScale(8),
 	},
 	sectionLabel: {
 		color: '#aaa',
-		fontSize: 13,
+		fontSize: scaleFont(13),
 		fontWeight: 'bold',
-		marginTop: 18,
-		marginBottom: 4,
-		marginLeft: 16,
+		marginTop: verticalScale(18),
+		marginBottom: verticalScale(4),
+		marginLeft: moderateScale(16),
 		letterSpacing: 1,
 	},
 	sectionBox: {
 		backgroundColor: '#1c1613',
-		borderRadius: 12,
-		marginHorizontal: 12,
-		marginBottom: 8,
-		paddingVertical: 2,
+		borderRadius: moderateScale(12),
+		marginHorizontal: moderateScale(12),
+		marginBottom: verticalScale(8),
+		paddingVertical: verticalScale(2),
 		overflow: 'hidden',
 	},
 	menuItem: {
 		flexDirection: 'row',
 		alignItems: 'center',
-		paddingVertical: 14,
-		paddingHorizontal: 12,
+		paddingVertical: verticalScale(14),
+		paddingHorizontal: moderateScale(12),
 		borderBottomWidth: 1,
 		borderBottomColor: '#231a17',
 	},
 	iconBox: {
-		width: 38,
-		height: 38,
-		borderRadius: 19,
+		width: moderateScale(38),
+		height: moderateScale(38),
+		borderRadius: moderateScale(19),
 		backgroundColor: '#231a17',
 		justifyContent: 'center',
 		alignItems: 'center',
-		marginRight: 14,
+		marginRight: moderateScale(14),
 	},
 	menuTextWrap: {
 		flex: 1,
 	},
 	userTextWrap: {
-		marginLeft: 16,
+		marginLeft: moderateScale(16),
 	},
 	contentScroll: {
 		flex: 1,
 	},
 	scrollContent: {
-		paddingBottom: 20,
+		paddingBottom: verticalScale(20),
 	},
 	logoutWrap: {
-		paddingHorizontal: 32,
-		paddingTop: 10,
-		paddingBottom: 24,
+		paddingHorizontal: moderateScale(32),
+		paddingTop: verticalScale(10),
+		paddingBottom: verticalScale(24),
 		backgroundColor: '#181210',
 	},
 	menuTitle: {
 		color: '#fff',
-		fontSize: 16,
+		fontSize: scaleFont(16),
 		fontWeight: 'bold',
 	},
 	menuDesc: {
 		color: '#aaa',
-		fontSize: 13,
-		marginTop: 2,
+		fontSize: scaleFont(13),
+		marginTop: verticalScale(2),
 	},
 	logoutBtn: {
 		backgroundColor: 'transparent',
 		borderWidth: 1.5,
 		borderColor: '#FF3B30',
-		borderRadius: 24,
-		paddingVertical: 12,
+		borderRadius: moderateScale(24),
+		paddingVertical: verticalScale(12),
 		alignItems: 'center',
 	},
 	logoutText: {
 		color: '#FF3B30',
-		fontSize: 17,
+		fontSize: scaleFont(17),
 		fontWeight: 'bold',
 		letterSpacing: 1,
 	},

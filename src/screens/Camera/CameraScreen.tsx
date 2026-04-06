@@ -5,20 +5,25 @@ import {
   TouchableOpacity,
   Text,
   Linking,
+  useWindowDimensions,
 } from "react-native";
 import { Camera, useCameraDevice } from "react-native-vision-camera";
 import { useNavigation } from "@react-navigation/native";
 import Ionicons from "@react-native-vector-icons/ionicons";
 import { openPhoneGallery } from "../../utils/galleryHelper";
+import { moderateScale, scaleFont, verticalScale } from '../../utils/responsive';
 
 export default function CameraScreen() {
   const device = useCameraDevice("back");
   const camera = useRef<Camera>(null);
   const navigation = useNavigation<any>();
+  const { width: screenWidth } = useWindowDimensions();
 
   const [hasPermission, setHasPermission] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Mọi người");
+  const frameWidth = Math.min(screenWidth - moderateScale(16), moderateScale(380));
+  const frameHeight = frameWidth * 0.92;
 
   useEffect(() => {
     (async () => {
@@ -99,7 +104,7 @@ export default function CameraScreen() {
       </View>
 
       <View style={styles.frameContainer}>
-        <View style={styles.frame}>
+        <View style={[styles.frame, { width: frameWidth, height: frameHeight, borderRadius: moderateScale(30) }]}>
           <Camera
             ref={camera}
             style={StyleSheet.absoluteFill}
@@ -114,39 +119,43 @@ export default function CameraScreen() {
             <Text style={styles.badgeText}>1x</Text>
           </View>
         </View>
-
-        {/* <View style={styles.modeDots}>
-          <View style={styles.dotActive} />
-          <View style={styles.dot} />
-        </View> */}
-
-        {/* <Text style={styles.modeText}>Chụp ảnh</Text> */}
       </View>
 
-      <View style={styles.bottomBar}>
-        <TouchableOpacity 
-          style={styles.smallBtn}
-          onPress={() => openPhoneGallery((imageUri) => {
-            navigation.navigate("Send", { imageUri });
-          })}
-        >
-          <Ionicons name="images" size={24} color="#fff" />
-        </TouchableOpacity>
+      <View style={styles.bottomPanel}>
+        <View style={styles.modeContainer}>
+          <View style={styles.modeDots}>
+            <View style={styles.dotActive} />
+            <View style={styles.dot} />
+          </View>
+          <Text style={styles.modeText}>Chụp ảnh</Text>
+        </View>
 
-        <TouchableOpacity style={styles.captureWrapper} onPress={takePicture}>
-          <View style={styles.captureBtn} />
-        </TouchableOpacity>
+        <View style={styles.bottomBar}>
+          <TouchableOpacity
+            style={styles.smallBtn}
+            onPress={() => openPhoneGallery((imageUri) => {
+              navigation.navigate("Send", { imageUri });
+            })}
+          >
+            <Ionicons name="images" size={moderateScale(24)} color="#fff" />
+          </TouchableOpacity>
 
-        <TouchableOpacity style={styles.smallBtn}>
-          <Ionicons name="camera-reverse" size={24} color="#fff" />
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity style={styles.captureWrapper} onPress={takePicture}>
+            <View style={styles.captureBtn} />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.smallBtn}>
+            <Ionicons name="camera-reverse" size={moderateScale(24)} color="#fff" />
+          </TouchableOpacity>
+        </View>
 
         <View style={styles.explore}>
           <TouchableOpacity onPress={() => navigation.navigate('Discover')}>
             <Text style={styles.exploreText}>Khám phá</Text>
           </TouchableOpacity>
+          <Ionicons name="chevron-down" size={moderateScale(14)} color="#8A8A8A" />
         </View>
+      </View>
     </View>
   );
 }
@@ -158,103 +167,100 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 24,
+    paddingHorizontal: moderateScale(24),
   },
   fallbackTitle: {
     color: '#fff',
-    fontSize: 20,
+    fontSize: scaleFont(20),
     fontWeight: '700',
-    marginBottom: 10,
+    marginBottom: verticalScale(10),
     textAlign: 'center',
   },
   fallbackText: {
     color: '#bbb',
-    fontSize: 14,
+    fontSize: scaleFont(14),
     textAlign: 'center',
-    marginBottom: 18,
+    marginBottom: verticalScale(18),
   },
   fallbackBtn: {
     backgroundColor: '#FFD400',
-    paddingHorizontal: 18,
-    paddingVertical: 10,
-    borderRadius: 18,
-    marginBottom: 10,
+    paddingHorizontal: moderateScale(18),
+    paddingVertical: verticalScale(10),
+    borderRadius: moderateScale(18),
+    marginBottom: verticalScale(10),
   },
   fallbackBtnText: {
     color: '#111',
     fontWeight: '700',
   },
   fallbackGhostBtn: {
-    paddingHorizontal: 10,
-    paddingVertical: 8,
+    paddingHorizontal: moderateScale(10),
+    paddingVertical: verticalScale(8),
   },
   fallbackGhostText: {
     color: '#FFD400',
-    fontSize: 13,
+    fontSize: scaleFont(13),
   },
 
   topBar: {
     position: "absolute",
-    top: 50,
+    top: verticalScale(50),
     width: "100%",
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 20,
+    paddingHorizontal: moderateScale(20),
     zIndex: 20,
   },
 
   avatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: moderateScale(40),
+    height: moderateScale(40),
+    borderRadius: moderateScale(20),
     backgroundColor: "#999",
     position: "absolute",
-    left: 20,
+    left: moderateScale(20),
   },
 
   dropdown: {
     backgroundColor: "#333",
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20, 
+    paddingHorizontal: moderateScale(12),
+    paddingVertical: verticalScale(6),
+    borderRadius: moderateScale(20),
   },
 
   dropdownText: { color: "#fff" },
 
   dropdownMenu: {
     position: "absolute",
-    top: 35,
+    top: verticalScale(35),
     backgroundColor: "#222",
-    borderRadius: 12,
+    borderRadius: moderateScale(12),
     overflow: "hidden",
-    minWidth: 150,
+    minWidth: moderateScale(150),
     zIndex: 30,
   },
 
   dropdownItem: {
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+    paddingVertical: verticalScale(12),
+    paddingHorizontal: moderateScale(16),
     borderBottomWidth: 1,
     borderBottomColor: "#333",
   },
 
   dropdownItemText: {
     color: "#fff",
-    fontSize: 14,
+    fontSize: scaleFont(14),
   },
 
   frameContainer: {
     position: "absolute",
-    top: 120,
+    top: verticalScale(150),
     width: "100%",
     alignItems: "center",
   },
 
   frame: {
-    width: 360,
-    height: 360,
-    borderRadius: 30,
     backgroundColor: "rgba(0,0,0,0.4)",
     overflow: "hidden",
     position: "relative",
@@ -262,45 +268,58 @@ const styles = StyleSheet.create({
 
   flashBadge: {
     position: "absolute",
-    top: 10,
-    left: 10,
+    top: verticalScale(10),
+    left: moderateScale(10),
   },
 
   zoomBadge: {
     position: "absolute",
-    top: 10,
-    right: 10,
+    top: verticalScale(10),
+    right: moderateScale(10),
+  },
+
+  bottomPanel: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+    backgroundColor: "#000",
+    paddingTop: verticalScale(4),
+    paddingBottom: verticalScale(18),
+    zIndex: 12,
+  },
+
+  modeContainer: {
+    alignItems: "center",
+    marginBottom: verticalScale(8),
   },
 
   modeDots: {
     flexDirection: "row",
-    marginTop: 12,
+    marginBottom: verticalScale(2),
   },
 
   dotActive: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    width: moderateScale(8),
+    height: moderateScale(8),
+    borderRadius: moderateScale(4),
     backgroundColor: "#FFD400",
-    marginHorizontal: 4,
+    marginHorizontal: moderateScale(4),
   },
 
   dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    width: moderateScale(8),
+    height: moderateScale(8),
+    borderRadius: moderateScale(4),
     backgroundColor: "#555",
-    marginHorizontal: 4,
+    marginHorizontal: moderateScale(4),
   },
 
   modeText: {
     color: "#fff",
-    marginTop: 6,
+    fontSize: scaleFont(12),
   },
 
   bottomBar: {
-    position: "absolute",
-    bottom: 80,
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-around",
@@ -308,8 +327,8 @@ const styles = StyleSheet.create({
   },
 
   smallBtn: {
-    width: 40,
-    height: 40,
+    width: moderateScale(40),
+    height: moderateScale(40),
     alignItems: "center",
     justifyContent: "center",
   },
@@ -317,21 +336,21 @@ const styles = StyleSheet.create({
   captureWrapper: {
     borderWidth: 3,
     borderColor: "#FFD400",
-    borderRadius: 50,
-    padding: 5,
+    borderRadius: moderateScale(50),
+    padding: moderateScale(5),
   },
 
   captureBtn: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
+    width: moderateScale(70),
+    height: moderateScale(70),
+    borderRadius: moderateScale(35),
     backgroundColor: "#fff",
   },
 
   explore: {
-    position: "absolute",
-    bottom: 30,
     alignSelf: "center",
+    alignItems: "center",
+    marginTop: verticalScale(6),
   },
 
   badgeText: {
@@ -340,5 +359,6 @@ const styles = StyleSheet.create({
 
   exploreText: {
     color: "#FFD400",
+    fontSize: scaleFont(13),
   },
 });

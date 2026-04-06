@@ -14,6 +14,7 @@ import {
 import Ionicons from '@react-native-vector-icons/ionicons';
 import BottomBar from '../../components/BottomBar';
 import { FriendSearchItem, searchFriendsApi } from '../../services/friendService';
+import { moderateScale, scaleFont, verticalScale } from '../../utils/responsive';
 
 type Friend = {
   id: string;
@@ -192,7 +193,7 @@ export default function FriendsScreen() {
             <Text style={styles.yellowButtonText}>Theo dõi lại</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.iconActionButton} onPress={() => onRemoveFollower(name)}>
-            <Ionicons name="close" size={22} color="#FFFFFF" />
+            <Ionicons name="close" size={moderateScale(22)} color="#FFFFFF" />
           </TouchableOpacity>
         </View>
       );
@@ -267,11 +268,11 @@ export default function FriendsScreen() {
           {isSearchOpen ? (
             <View style={styles.searchRow}>
               <TouchableOpacity style={styles.backSearchButton} onPress={onCloseSearch}>
-                <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
+                <Ionicons name="arrow-back" size={moderateScale(24)} color="#FFFFFF" />
               </TouchableOpacity>
 
               <View style={styles.searchInputWrap}>
-                <Ionicons name="search-outline" size={20} color="#A6A6A6" />
+                <Ionicons name="search-outline" size={moderateScale(20)} color="#A6A6A6" />
                 <TextInput
                   value={searchInput}
                   onChangeText={setSearchInput}
@@ -288,7 +289,7 @@ export default function FriendsScreen() {
             <>
               <Text style={styles.title}>Bạn bè</Text>
               <TouchableOpacity style={styles.searchButton} onPress={onSearchPress}>
-                <Ionicons name="search-outline" size={20} color="#FFFFFF" />
+                <Ionicons name="search-outline" size={moderateScale(20)} color="#FFFFFF" />
               </TouchableOpacity>
             </>
           )}
@@ -354,15 +355,15 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 12,
+    paddingHorizontal: moderateScale(20),
+    paddingTop: verticalScale(12),
   },
   headerRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 14,
-    minHeight: 44,
+    marginBottom: verticalScale(14),
+    minHeight: verticalScale(44),
   },
   searchRow: {
     flexDirection: 'row',
@@ -370,37 +371,37 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   backSearchButton: {
-    marginRight: 10,
-    paddingVertical: 6,
-    paddingRight: 4,
+    marginRight: moderateScale(10),
+    paddingVertical: verticalScale(6),
+    paddingRight: moderateScale(4),
   },
   searchInputWrap: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#1F1B1A',
-    borderRadius: 26,
-    paddingHorizontal: 14,
-    minHeight: 48,
+    borderRadius: moderateScale(26),
+    paddingHorizontal: moderateScale(14),
+    minHeight: verticalScale(48),
     borderWidth: 1,
     borderColor: '#302A29',
   },
   searchInput: {
     flex: 1,
     color: '#FFFFFF',
-    fontSize: 18,
-    marginLeft: 8,
-    paddingVertical: 8,
+    fontSize: scaleFont(18),
+    marginLeft: moderateScale(8),
+    paddingVertical: verticalScale(8),
   },
   title: {
     color: '#FFFFFF',
-    fontSize: 24,
+    fontSize: scaleFont(24),
     fontWeight: '800',
   },
   searchButton: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
+    width: moderateScale(38),
+    height: moderateScale(38),
+    borderRadius: moderateScale(19),
     borderWidth: 1,
     borderColor: '#5B5B5B',
     alignItems: 'center',
@@ -409,15 +410,15 @@ const styles = StyleSheet.create({
   },
   tabsWrap: {
     backgroundColor: '#1A1615', 
-    borderRadius: 30,
-    padding: 4,
+    borderRadius: moderateScale(30),
+    padding: moderateScale(4),
     flexDirection: 'row',
-    marginBottom: 18,
+    marginBottom: verticalScale(18),
   },
   tabButton: {
     flex: 1,
-    borderRadius: 25,
-    paddingVertical: 12,
+    borderRadius: moderateScale(25),
+    paddingVertical: verticalScale(12),
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -426,7 +427,7 @@ const styles = StyleSheet.create({
   },
   tabText: {
     color: '#8E8A89',
-    fontSize: 14,
+    fontSize: scaleFont(14),
     fontWeight: '600',
   },
   tabTextActive: {
@@ -434,26 +435,26 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   listContainer: {
-    paddingBottom: 16,
+    paddingBottom: verticalScale(16),
   },
   searchLoader: {
-    marginTop: 10,
+    marginTop: verticalScale(10),
   },
   emptyText: {
     color: '#8E8A89',
-    fontSize: 15,
-    marginTop: 16,
+    fontSize: scaleFont(15),
+    marginTop: verticalScale(16),
   },
   errorText: {
     color: '#FF7D7D',
-    fontSize: 15,
-    marginTop: 10,
+    fontSize: scaleFont(15),
+    marginTop: verticalScale(10),
   },
   itemRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 16,
+    paddingVertical: verticalScale(16),
   },
   userInfo: {
     flexDirection: 'row',
@@ -461,71 +462,71 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   avatar: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
-    marginRight: 12,
+    width: moderateScale(52),
+    height: moderateScale(52),
+    borderRadius: moderateScale(26),
+    marginRight: moderateScale(12),
     backgroundColor: '#383838',
   },
   userName: {
     color: '#FFFFFF',
-    fontSize: 16,
+    fontSize: scaleFont(16),
     fontWeight: '700',
     flexShrink: 1,
   },
   darkActionButton: {
     backgroundColor: '#1E1B1A',
-    borderRadius: 18,
-    paddingHorizontal: 14,
-    paddingVertical: 9,
-    marginLeft: 12,
+    borderRadius: moderateScale(18),
+    paddingHorizontal: moderateScale(14),
+    paddingVertical: verticalScale(9),
+    marginLeft: moderateScale(12),
   },
   darkActionText: {
     color: '#FFFFFF',
-    fontSize: 15,
+    fontSize: scaleFont(15),
     fontWeight: '500',
   },
   actionsRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: 10,
+    marginLeft: moderateScale(10),
   },
   yellowButton: {
     backgroundColor: '#F8C819',
-    borderRadius: 20,
-    paddingHorizontal: 14,
-    paddingVertical: 8,
-    marginRight: 8,
+    borderRadius: moderateScale(20),
+    paddingHorizontal: moderateScale(14),
+    paddingVertical: verticalScale(8),
+    marginRight: moderateScale(8),
   },
   yellowButtonText: {
     color: '#111111',
-    fontSize: 16,
+    fontSize: scaleFont(16),
     fontWeight: '700',
   },
   iconActionButton: {
-    padding: 4,
+    padding: moderateScale(4),
   },
   sectionTitle: {
     color: '#FFFFFF',
-    fontSize: 24,
+    fontSize: scaleFont(24),
     fontWeight: '800',
-    marginTop: 8,
-    marginBottom: 6,
+    marginTop: verticalScale(8),
+    marginBottom: verticalScale(6),
   },
   smallYellowButton: {
     backgroundColor: '#F8C819',
-    borderRadius: 20,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    marginLeft: 12,
+    borderRadius: moderateScale(20),
+    paddingHorizontal: moderateScale(16),
+    paddingVertical: verticalScale(8),
+    marginLeft: moderateScale(12),
   },
   smallYellowButtonText: {
     color: '#111111',
-    fontSize: 16,
+    fontSize: scaleFont(16),
     fontWeight: '700',
   },
   separator: {
-    height: 1,
+    height: verticalScale(1),
     backgroundColor: '#211C1A',
   },
 });

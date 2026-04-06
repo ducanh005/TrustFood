@@ -14,6 +14,7 @@ import { RootStackParamList } from '../../navigation/RootNavigator';
 import { Toggle } from '../../components/Toggle';
 import { useAuth } from '../../context/AuthContext';
 import { ApiError } from '../../services/httpClient';
+import { moderateScale, scaleFont, verticalScale } from '../../utils/responsive';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 
@@ -63,7 +64,7 @@ export default function LoginScreen() {
       </View>
 
       <View style={styles.form}>
-        <AppText variant="H7" style={{ color: theme.colors.background, marginBottom: 8 }}>
+        <AppText variant="H7" style={{ color: theme.colors.background, marginBottom: verticalScale(8) }}>
           Tên đăng nhập
         </AppText>
         <TextInput
@@ -75,7 +76,7 @@ export default function LoginScreen() {
           autoCapitalize="none"
         />
 
-        <AppText variant="H7" style={{ color: theme.colors.background, marginBottom: 8 }}>
+        <AppText variant="H7" style={{ color: theme.colors.background, marginBottom: verticalScale(8) }}>
           Mật khẩu
         </AppText>
 
@@ -86,14 +87,14 @@ export default function LoginScreen() {
             secureTextEntry={!showPassword}
             value={password}
             onChangeText={setPassword}
-            style={[styles.input, { paddingRight: 48 }]}
+            style={[styles.input, { paddingRight: moderateScale(48) }]}
           />
           <TouchableOpacity
             style={styles.eyeBtn}
             onPress={() => setShowPassword(!showPassword)}
             activeOpacity={0.7}
           >
-            <AppText style={{ color: '#999', fontSize: 16 }}>
+            <AppText style={{ color: '#999', fontSize: scaleFont(16) }}>
               {showPassword ? '🙈' : '👁️'}
             </AppText>
           </TouchableOpacity>
@@ -106,7 +107,7 @@ export default function LoginScreen() {
             activeOpacity={0.7}
           >
             <Toggle type='checkbox' checked={remember} />
-            <AppText variant="P4_Regular" style={{ color: theme.colors.background, marginLeft: 6 }}>
+            <AppText variant="P4_Regular" style={{ color: theme.colors.background, marginLeft: moderateScale(6) }}>
               Lưu mật khẩu
             </AppText>
           </TouchableOpacity>
@@ -142,7 +143,7 @@ export default function LoginScreen() {
         <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <AppText
             variant="H6"
-            style={{ color: theme.colors.primary, marginLeft: 6, lineHeight: 24 }}
+            style={{ color: theme.colors.primary, marginLeft: moderateScale(6), lineHeight: verticalScale(24) }}
           >
             Đăng ký ngay
           </AppText>
@@ -174,48 +175,48 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    padding: 16,
+    padding: moderateScale(16),
   },
   content: {
-    marginTop: -134,
+    marginTop: -verticalScale(134),
     alignItems: 'center',
   },
   logo: {
-    width: 72,
-    height: 72,
-    marginBottom: 24,
-    borderRadius: 12,
+    width: moderateScale(72),
+    height: moderateScale(72),
+    marginBottom: verticalScale(24),
+    borderRadius: moderateScale(12),
   },
   form: {
-    marginBottom: 60,
+    marginBottom: verticalScale(60),
   },
   title: {
     textAlign: 'center',
-    marginBottom: 32,
+    marginBottom: verticalScale(32),
     color: '#fff',
   },
   input: {
-    height: 50,
+    height: verticalScale(50),
     backgroundColor: '#1c1c1c',
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    marginBottom: 16,
+    borderRadius: moderateScale(12),
+    paddingHorizontal: moderateScale(16),
+    marginBottom: verticalScale(16),
     color: '#fff',
   },
   content2: {
-    marginTop: 30,
-    marginBottom: -160,
+    marginTop: verticalScale(30),
+    marginBottom: -verticalScale(160),
   },
   primaryBtn: {
-    height: 56,
-    borderRadius: 28,
+    height: verticalScale(56),
+    borderRadius: moderateScale(28),
     justifyContent: 'center',
     alignItems: 'center',
   },
   outlineBtn: {
-    marginTop: 20,
-    height: 56,
-    borderRadius: 28,
+    marginTop: verticalScale(20),
+    height: verticalScale(56),
+    borderRadius: moderateScale(28),
     borderWidth: 1,
     borderColor: '#fff',
     justifyContent: 'center',
@@ -223,19 +224,19 @@ const styles = StyleSheet.create({
   },
   addText: {
     textAlign: 'center',
-    marginTop: 20,
+    marginTop: verticalScale(20),
     color: '#c0c0c0',
   },
   errorText: {
     color: '#ff7b7b',
     textAlign: 'center',
-    marginTop: 12,
+    marginTop: verticalScale(12),
   },
   rowCenter: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: verticalScale(20),
   },
   btnContent: {
     flexDirection: 'row',
@@ -243,9 +244,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   icon: {
-    width: 20,
-    height: 20,
-    marginRight: 8,
+    width: moderateScale(20),
+    height: moderateScale(20),
+    marginRight: moderateScale(8),
   },
   btnText: {
     color: '#fff',
@@ -256,16 +257,16 @@ const styles = StyleSheet.create({
   },
   eyeBtn: {
     position: 'absolute',
-    right: 16,
+    right: moderateScale(16),
     top: 0,
-    height: 50,
+    height: verticalScale(50),
     justifyContent: 'center',
   },
   rowBetween: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: -6,
+    marginTop: -verticalScale(6),
   },
   rememberRow: {
     flexDirection: 'row',

@@ -1,5 +1,6 @@
 import React from 'react';
 import {  View, StyleSheet } from 'react-native';
+import { moderateScale } from '../utils/responsive';
 
 type Props = {
   checked: boolean;
@@ -22,16 +23,16 @@ export const Toggle = ({ checked, type = 'checkbox' }: Props) => {
 
 const styles = StyleSheet.create({
   base: {
-    width: 20,
-    height: 20,
-    borderRadius: 6,
+    width: moderateScale(20),
+    height: moderateScale(20),
+    borderRadius: moderateScale(6),
     borderWidth: 2,
   },
   radio: {
     borderRadius: 999,
   },
   switch: {
-    width: 36,
+    width: moderateScale(36),
     borderRadius: 999,
   },
   active: {
